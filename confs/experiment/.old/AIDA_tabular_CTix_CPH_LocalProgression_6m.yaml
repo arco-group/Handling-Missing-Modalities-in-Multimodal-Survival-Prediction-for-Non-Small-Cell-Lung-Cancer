@@ -1,0 +1,59 @@
+# @package _global_
+
+experiment_name: ${db_name}_${seed}_time2event
+experiment_subname: ${model_name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx
+pipeline: simple
+
+
+seed: 42
+verbose: 1
+time_divisor: 1
+
+continue_experiment: True # True # False
+
+naim_version: cat
+num_layers: 2
+
+db_name: ${db.name}
+model_name: ${oc.select:shared_net.name, ${model.name}}
+mode: tabular_ctix
+defaults:
+  - _self_
+  - paths@: default
+  - paths: experiment_paths
+
+  - databases@db: AIDA_LocalProgression_6m
+
+  - cross_validation@test_cv: provided
+  - cross_validation@val_cv: provided
+
+  - preprocessing/numerical: normalize
+  - preprocessing/categorical: categoricalencode # categoricalencode or onehotencode
+  - preprocessing/imputer: knn # simple or knn or iterative or noimputation
+  - preprocessing/label: none
+  - model_type_params@dl_params: dl_params
+  - model_type_params@ml_params: ml_params
+
+
+  #- model@shared_net: naim
+  #- model@cs_subnet: custom_mlp
+  - model: cox_proportional_hazard # random_survival_forest # survival_naim #  # survival_wrapper # random_survival_forest # survival_gradient_boosting
+
+  - model_type_params@train.dl_params: dl_params
+  - initializer@train.initializer: xavier_uniform #uniform
+  - loss@train.loss.loglike: survival_loglikelihood
+  - loss@train.loss.ranking: survival_ranking
+  # - regularizer@train.regularizer.l1: l1
+  #- regularizer@train.regularizer.l2: l2
+  - optimizer@train.optimizer: adamW
+  #- metric@train.set_metrics.c_index: c_index
+  - metric@train.set_metrics.ct_index: ct_index
+  - train_utils@train.manager: train_manager
+
+  - metric@performance_metrics.ct_index: ct_index
+
+
+
+  # - overrides@model.init_params: deephit
+
+

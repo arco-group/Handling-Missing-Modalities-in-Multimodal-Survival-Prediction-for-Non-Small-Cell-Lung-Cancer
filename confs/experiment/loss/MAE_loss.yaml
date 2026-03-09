@@ -1,0 +1,8 @@
+name: mean_absolut_error
+init_params:
+  _target_: torch.nn.L1Loss
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing
+
+alpha: 1

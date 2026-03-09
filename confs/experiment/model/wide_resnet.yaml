@@ -1,0 +1,43 @@
+name: wide_resnet
+framework: torch
+model_type: imaging
+
+model_tasks:
+  - classification
+  - regression
+
+label_types:
+  - binary
+  - categorical
+  - continuous
+
+set_params_function:
+  _target_: CMC_utils.models.set_sota_model_params
+
+init_params:
+  _target_: CMC_utils.models.get_wide_resnet
+  _convert_: all
+
+  name: wide_resnet101_2
+
+  num_classes:
+
+  load_weights: False
+
+  extractor: False
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

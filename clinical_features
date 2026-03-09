@@ -1,0 +1,188 @@
+import pandas as pd
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ------------------------------
+# 1. Load data
+# ------------------------------
+file_path = "/Users/filruff/Desktop/PHD/PROGETTI/Multimodal_MARIA_AIDA/data/tabular/survival/AIDA/tabular/clinical_data_III_stage.csv"
+df = pd.read_csv(file_path, header=0)
+
+print("Columns:", df.columns.tolist())
+print("Total patients:", len(df))
+
+# ------------------------------
+# 2. Basic cleaning
+# ------------------------------
+df.columns = df.columns.str.replace(' ', '_')
+
+# Example of columns of interest (adapt if names differ)
+age_col = "eta"
+sex_col = "Sesso"
+stage_col = "Stadio_alla_diagnosi"
+histology_col = "Diagnosi"
+smoke_col = "Smoking_habitus"
+immuno_col = "Immuno_post_radiochemio_(adj)"
+dose_col = "Dose_erogata_[Gy]"
+fractions_col = "Numero_frazioni"
+outcome_col = "status"
+pdl1_col = "PDL1(%)"
+tox_esoph_col = "Tox_esofagea"
+tox_pulm_col = "Tox_polmonare"
+comorbidity= "Comorbidità1"
+comorbidity2=  "Comorbidità2"
+comorbidity3=  "Comorbidità3"
+egfr= 'EGFR'
+alk= 'ALK'
+met= 'MET'
+technique= 'Tecnica'
+ct_induction= 'Tipo_CT_induzione'
+ct_concomitant= 'Schema_CT_concomitante'
+weight_kg= 'Peso_(kg)'
+height_cm= 'Altezza_(cm)'
+nrs= 'NRS'
+sig_per_day= 'Sig/die'
+ps_ecog= 'PS_ECOG_basale'
+duration_rt= 'Durata_RT'
+suspension_days= 'Giorni_di_Sospensione'
+tox_hb= 'Tox_Hb'
+tox_neu= 'Tox_Neu'
+tox_plt= 'Tox_PLT'
+
+
+
+# ------------------------------
+# 3. Summary functions
+# ------------------------------
+def describe_categorical(series):
+    counts = series.value_counts(dropna=False)
+    total = counts.sum()
+    return {k: f"{v} ({v/total*100:.1f}%)" for k, v in counts.items()}
+
+def describe_continuous(series):
+    s = pd.to_numeric(series, errors="coerce")
+    desc = {}
+    valid = s.dropna()
+    if len(valid) == 0:
+        return {"mean": "NA", "std": "NA", "median": "NA", "iqr": "NA", "missings": len(s)}
+    desc["mean"] = f"{valid.mean():.2f}"
+    desc["std"] = f"{valid.std():.2f}"
+    desc["median"] = f"{valid.median():.1f}"
+    desc["iqr"] = f"[{valid.quantile(0.25):.1f}–{valid.quantile(0.75):.1f}]"
+    desc["missings"] = s.isna().sum()
+    return desc
+
+# ------------------------------
+# 4. Compute summary statistics
+# ------------------------------
+summary = {
+    "Total patients": len(df),
+    "Sex": describe_categorical(df[sex_col]),
+    "Age (years)": describe_continuous(df[age_col]),
+    "Stage at diagnosis": describe_categorical(df[stage_col]),
+    "Histology": describe_categorical(df[histology_col]),
+    "Smoking habitus": describe_categorical(df[smoke_col]),
+    "Adjuvant immunotherapy": describe_categorical(df[immuno_col]),
+    "PD-L1 (%)": describe_continuous(df[pdl1_col]),
+    "Radiation dose (Gy)": describe_continuous(df[dose_col]),
+    "Number of fractions": describe_continuous(df[fractions_col]),
+    "Esophageal toxicity": describe_categorical(df[tox_esoph_col]),
+    "Pulmonary toxicity": describe_categorical(df[tox_pulm_col]),
+    "Outcome status": describe_categorical(df[outcome_col]),
+    "Comorbidity 1": describe_categorical(df[comorbidity]),
+    "Comorbidity 2": describe_categorical(df[comorbidity2]),
+    "Comorbidity 3": describe_categorical(df[comorbidity3]),
+    "EGFR mutation": describe_categorical(df[egfr]),
+    "ALK rearrangement": describe_categorical(df[alk]),
+    "MET alteration": describe_categorical(df[met]),
+    "Technique": describe_categorical(df[technique]),
+    "Induction chemotherapy": describe_categorical(df[ct_induction]),
+    "Concomitant chemotherapy": describe_categorical(df[ct_concomitant]),
+    "Weight (kg)": describe_continuous(df[weight_kg]),
+    "Height (cm)": describe_continuous(df[height_cm]),
+    "NRS": describe_continuous(df[nrs]),
+    "Cigarettes per day": describe_continuous(df[sig_per_day]),
+    "ECOG PS": describe_categorical(df[ps_ecog]),
+    "Radiation therapy duration (days)": describe_continuous(df[duration_rt]),
+    "Suspension days": describe_continuous(df[suspension_days]),
+    "Hemoglobin toxicity": describe_categorical(df[tox_hb]),
+    "Neutrophil toxicity": describe_categorical(df[tox_neu]),
+    "Platelet toxicity": describe_categorical(df[tox_plt])
+}
+
+# ------------------------------
+# 5. Print summary
+# ------------------------------
+for k, v in summary.items():
+    print(f"\n=== {k} ===")
+    if isinstance(v, dict):
+        for subk, subv in v.items():
+            print(f"  {subk}: {subv}")
+    else:
+        print(v)
+
+# ------------------------------
+# 6. Missing Value Analysis
+# ------------------------------
+missing_percent = df.isna().mean() * 100
+missing_percent = missing_percent.sort_values(ascending=False)
+missing_df = missing_percent.reset_index()
+missing_df.columns = ["Variable", "Missing (%)"]
+missing_df = missing_df[missing_df["Variable"].isin([age_col, sex_col, stage_col, histology_col, smoke_col, immuno_col, dose_col, fractions_col, outcome_col, pdl1_col,
+                                                tox_esoph_col, tox_pulm_col, comorbidity, comorbidity2, comorbidity3, egfr, alk, met, technique, ct_induction,
+                                                ct_concomitant, weight_kg, height_cm, nrs, sig_per_day, ps_ecog, duration_rt, suspension_days, tox_hb, tox_neu, tox_plt])]
+
+
+print("\n=== Missing Value Summary ===")
+print(missing_df.head(20))  # Print top 20 variables by missing rate
+
+# ------------------------------
+# 7. Plot Missing Values
+# ------------------------------
+plt.figure(figsize=(10, max(6, len(missing_df) * 0.2)))
+sns.barplot(data=missing_df, y="Variable", x="Missing (%)", palette="Reds_r")
+plt.title("Missing Values per Variable", fontsize=14, weight="bold")
+plt.xlabel("Missing Values (%)")
+plt.ylabel("")
+plt.tight_layout()
+plt.savefig("missing_values_plot.png", dpi=300)
+plt.show()
+
+print("\n✅ Missing values plot saved to 'missing_values_plot.png'")
+
+# ------------------------------
+# 8. (Optional) Export to LaTeX
+# ------------------------------
+latex_rows = []
+for key, val in summary.items():
+    if isinstance(val, dict):
+        if "mean" in val:
+            row = f"{key} & Continuous & ${val['mean']} \\pm {val['std']}$ \\\\"
+        else:
+            levels = ", ".join([f"{k}: {v}" for k, v in val.items()])
+            row = f"{key} & Categorical & {levels} \\\\"
+    else:
+        row = f"{key} &  & {val} \\\\"
+    latex_rows.append(row)
+
+latex_table = "\n".join([
+    "\\begin{table*}[!ht]",
+    "\\centering",
+    "\\small",
+    "\\caption{Summary statistics of the NSCLC dataset.}",
+    "\\begin{tabular}{lcc}",
+    "\\toprule",
+    "Variable & Type & Summary \\\\",
+    "\\midrule",
+    *latex_rows,
+    "\\bottomrule",
+    "\\end{tabular}",
+    "\\end{table*}",
+])
+
+with open("dataset_summary.tex", "w") as f:
+    f.write(latex_table)
+
+print("✅ LaTeX table saved to dataset_summary.tex")

@@ -1,0 +1,3 @@
+# @package _global_
+val_cv:
+  n_splits: 3

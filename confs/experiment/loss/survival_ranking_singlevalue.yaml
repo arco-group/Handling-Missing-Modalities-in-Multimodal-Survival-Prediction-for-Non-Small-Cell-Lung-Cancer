@@ -1,0 +1,15 @@
+name: survival_ranking_singlevalue
+init_params:
+  _target_: CMC_utils.losses.SurvivalRankingLoss_singlevalue
+
+  num_events:
+
+  max_time:
+
+  sigma: 0.1
+  # alpha: [ 0.3 ]
+
+set_params_function:
+  _target_: CMC_utils.losses.set_survival_loss_params
+
+alpha: 1.0

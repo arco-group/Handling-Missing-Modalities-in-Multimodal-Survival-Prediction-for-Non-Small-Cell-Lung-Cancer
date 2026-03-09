@@ -1,0 +1,4 @@
+_target_: CMC_utils.preprocessing.CenterCrop
+_convert_: all
+
+size: #[224, 224]

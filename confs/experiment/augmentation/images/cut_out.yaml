@@ -1,0 +1,17 @@
+_target_: torchvision.transforms.v2.RandomErasing
+_convert_: all
+
+p: ${oc.select:augmentation_probability, 0.5}
+# (float, optional) – probability that the random erasing operation will be performed.
+
+# scale:
+# (tuple of python:float, optional) – range of proportion of erased area against input image.
+
+# ratio:
+# (tuple of python:float, optional) – range of aspect ratio of erased area.
+
+value: ${oc.select:image_fill_augmentation, 0}
+# (number or tuple of numbers) – erasing value. Default is 0. If a single int, it is used to erase all pixels. If a tuple of length 3, it is used to erase R, G, B channels respectively. If a str of ‘random’, erasing each pixel with random values.
+
+# inplace: False
+# (bool, optional) – boolean to make this transform inplace. Default set to False.

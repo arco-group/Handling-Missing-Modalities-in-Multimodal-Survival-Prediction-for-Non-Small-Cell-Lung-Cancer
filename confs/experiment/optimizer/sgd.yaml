@@ -1,0 +1,30 @@
+name: SGD
+init:
+  _target_: torch.optim.SGD
+
+  # lr: ${dl_params.init_learning_rate} # it is assigned by the scheduler during training #
+  # (float, optional) – learning rate (default: 1e-3)
+
+  momentum: 0.9
+  # (float, optional) – momentum factor (default: 0)
+
+  weight_decay: 0
+  # (float, optional) – weight decay (L2 penalty) (default: 0)
+
+  dampening: 0
+  # (float, optional) – dampening for momentum (default: 0)
+
+  nesterov: False
+  # (bool, optional) – enables Nesterov momentum (default: False)
+
+  maximize: False
+  # (bool, optional) – maximize the objective with respect to the params, instead of minimizing (default: False)
+
+  # foreach:
+  # (bool, optional) – whether foreach implementation of optimizer is used. If unspecified by the user (so foreach is None), we will try to use foreach over the for-loop implementation on CUDA, since it is usually significantly more performant. Note that the foreach implementation uses ~ sizeof(params) more peak memory than the for-loop version due to the intermediates being a tensorlist vs just one tensor. If memory is prohibitive, batch fewer parameters through the optimizer at a time or switch this flag to False (default: None)
+
+  # differentiable:
+  # (bool, optional) – whether autograd should occur through the optimizer step in training. Otherwise, the step() function runs in a torch.no_grad() context. Setting to True can impair performance, so leave it False if you don’t intend to run autograd through this instance (default: False)
+
+  #fused:
+  # (bool, optional) – whether the fused implementation is used. Currently, torch.float64, torch.float32, torch.float16, and torch.bfloat16 are supported. (default: None)

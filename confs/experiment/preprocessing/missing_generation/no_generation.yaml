@@ -1,0 +1,4 @@
+method: no_generation
+missing_fraction: 0.0
+apply_to: ${oc.select:multimodal_missing_generation, features}
+seed: ${seed}

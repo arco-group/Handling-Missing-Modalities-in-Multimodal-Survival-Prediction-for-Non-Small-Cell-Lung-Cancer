@@ -1,0 +1,39 @@
+method: leaveoneoutencode
+
+nan_as_category: False
+# bool, default False
+# whether to add missing values as an additional column or not.
+
+fill_value: 0
+# int, default 1
+# integer indicating whether to fill missing values with the target mean (1) or leave a NaN (0).
+
+verbose: 0
+# int, default 0
+# integer indicating verbosity of the output. 0 for none.
+
+# cols:
+# list
+# a list of columns to encode, if None, all string columns will be encoded.
+
+drop_invariant: False
+# bool, default False
+# boolean for whether to drop columns with 0 variance or not.
+
+return_df: True
+# bool, default True
+# boolean for whether to return a pandas DataFrame from transform (otherwise it will be a numpy array).
+
+# handle_missing: value
+# str, default 'value'
+# options are ‘error’, ‘return_nan’ and ‘value’, defaults to ‘value’, which returns the target mean.
+
+handle_unknown: value
+# str, default 'value'
+# options are ‘error’, ‘return_nan’ and ‘value’, defaults to ‘value’, which returns the target mean.
+
+sigma: 0.05
+# float, default 0
+# adds normal (Gaussian) distribution noise into training data in order to decrease overfitting (testing data are untouched). Sigma gives the standard deviation (spread or “width”) of the normal distribution. The optimal value is commonly between 0.05 and 0.6. The default is to not add noise, but that leads to significantly suboptimal results.
+
+random_state: ${seed}

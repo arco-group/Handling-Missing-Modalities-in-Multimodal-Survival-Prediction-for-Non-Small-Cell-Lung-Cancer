@@ -1,0 +1,50 @@
+name: EfficientNet
+framework: torch
+model_type: imaging
+
+model_tasks:
+  - classification
+  - regression
+
+label_types:
+  - binary
+  - categorical
+  - continuous
+
+set_params_function:
+  _target_: CMC_utils.models.set_sota_model_params
+
+init_params:
+  _target_: CMC_utils.models.get_efficientnet
+  _convert_: all
+
+  name: efficientnet_b0
+
+  num_classes:
+
+  load_weights: True
+
+  d_token: 1024
+
+  extractor: False
+
+fit_params: {}
+
+model_parts:
+  features: [1e-5, 1e-6, 1e-7] #, 1e-8, 1e-9]
+  # avgpool: [1e-5, 1e-6, 1e-7] #, 1e-8, 1e-9]
+  classifier: ${dl_params.learning_rates}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

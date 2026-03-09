@@ -1,0 +1,10 @@
+name: ct_index
+init:
+  _target_: CMC_utils.metrics.Ct_index
+
+  num_events:
+
+  average: False
+
+set_params_function:
+  _target_: CMC_utils.metrics.set_ct_index_params

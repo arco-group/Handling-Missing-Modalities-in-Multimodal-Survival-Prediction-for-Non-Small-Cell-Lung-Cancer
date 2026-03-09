@@ -1,0 +1,6 @@
+name: c_index
+init:
+  _target_: CMC_utils.metrics.c_index
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing

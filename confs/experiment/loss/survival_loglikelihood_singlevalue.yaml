@@ -1,0 +1,14 @@
+name: survival_loglikelihood_singlevalue
+init_params:
+  _target_: CMC_utils.losses.SurvivalLogLikelihoodLoss_singlevalue
+
+  num_events:
+
+  max_time:
+
+  sigma: 0.01
+
+set_params_function:
+  _target_: CMC_utils.losses.set_survival_loss_params
+
+alpha: 1.0

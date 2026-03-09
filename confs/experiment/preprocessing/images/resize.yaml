@@ -1,0 +1,30 @@
+_target_: torchvision.transforms.v2.Resize
+_convert_: all
+
+size:
+  - 224
+  - 224
+# (sequence, int, or None) – Desired output size.
+# If size is a sequence like (h, w), output size will be matched to this.
+# If size is an int, smaller edge of the image will be matched to this number. i.e, if height > width, then image will be rescaled to (size * height / width, size).
+# If size is None, the output shape is determined by the max_size parameter.
+
+
+interpolation: torchvision.transforms.InterpolationMode.BICUBIC
+# (InterpolationMode, optional) – Desired interpolation enum defined by torchvision.transforms.InterpolationMode.
+# Default is InterpolationMode.BILINEAR. If input is Tensor, only InterpolationMode.NEAREST,
+# InterpolationMode.NEAREST_EXACT, InterpolationMode.BILINEAR and InterpolationMode.BICUBIC are supported.
+# The corresponding Pillow integer constants, e.g. PIL.Image.BILINEAR are accepted as well.
+
+max_size:
+# (int, optional) – The maximum allowed for the longer edge of the resized image.
+# If size is an int: if the longer edge of the image is greater than max_size after being resized according to size, size will be overruled so that the longer edge is equal to max_size. As a result, the smaller edge may be shorter than size. This is only supported if size is an int (or a sequence of length 1 in torchscript mode).
+# If size is None: the longer edge of the image will be matched to max_size. i.e, if height > width, then image will be rescaled to (max_size, max_size * width / height).
+# This should be left to None (default) when size is a sequence.
+
+antialias: True
+# (bool, optional) – Whether to apply antialiasing. It only affects tensors with bilinear or bicubic modes and it is ignored otherwise: on PIL images, antialiasing is always applied on bilinear or bicubic modes; on other modes (for PIL images and tensors), antialiasing makes no sense and this parameter is ignored. Possible values are:
+# True (default): will apply antialiasing for bilinear or bicubic modes. Other mode aren’t affected. This is probably what you want to use.
+# False: will not apply antialiasing for tensors on any mode. PIL images are still antialiased on bilinear or bicubic modes, because PIL doesn’t support no antialias.
+# None: equivalent to False for tensors and True for PIL images. This value exists for legacy reasons and you probably don’t want to use it unless you really know what you are doing.
+# The default value changed from None to True in v0.17, for the PIL and Tensor backends to be consistent.

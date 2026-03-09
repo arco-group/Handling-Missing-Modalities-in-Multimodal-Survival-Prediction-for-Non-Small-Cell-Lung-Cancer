@@ -1,0 +1,10 @@
+_target_: CMC_utils.preprocessing.Scale
+_convert_: all
+
+scale: 1024
+
+max_val: 255
+
+min_val: 0
+
+method: symmetric

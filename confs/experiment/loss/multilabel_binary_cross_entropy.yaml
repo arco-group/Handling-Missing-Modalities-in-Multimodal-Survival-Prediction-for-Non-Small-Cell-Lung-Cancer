@@ -1,0 +1,12 @@
+name: multilabel_binary_cross_entropy
+init_params:
+  _target_: CMC_utils.losses.MultilabelBCEWithLogitsLoss
+
+  reduction: mean
+
+  ignore_index: -100
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing
+
+alpha: 1

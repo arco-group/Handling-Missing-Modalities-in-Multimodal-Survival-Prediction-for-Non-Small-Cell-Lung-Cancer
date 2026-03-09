@@ -1,0 +1,23 @@
+# @package _global_
+hydra:
+  job:
+    name: ${experiment_name}
+    chdir: False # Default False to be able to define the entire path where to save the outputs, if True it concatenates os.chdir with the run/dir or sweep/dir/subdir.
+    # config:
+    #   override_dirname:
+    #    item_sep: '/'
+        # kv_sep: '-'
+        # exclude_keys:
+  #job_logging:
+    #disable_existing_loggers: False
+  run:
+    dir: ${output_path} # /${hydra.job.name} #/${hydra.job.override_dirname} # /${now:%Y-%m-%d}/${now:%H-%M-%S}/${hydra.job.override_dirname} # ${hydra.job.override_dirname} ${hydra.job.name}
+  sweep:
+    dir: ${output_path} # /${hydra.job.name} # /${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: '' # ${hydra.job.override_dirname}  # ${hydra.job.num}hydra:
+#  job_logging:
+#    handlers:
+#      file:
+#        class: logging.FileHandler
+#        formatter: simple
+#        filename: ${output_path}/${test_cv.method}_${val_cv.method}/logs/${preprocessing.numerical.method}_${preprocessing.categorical.method}_${preprocessing.imputer.method}/${model.name}/${experiment_subname}.log

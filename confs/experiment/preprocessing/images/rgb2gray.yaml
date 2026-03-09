@@ -1,0 +1,4 @@
+_target_: torchvision.transforms.v2.Grayscale
+_convert_: all
+
+num_output_channels: 1

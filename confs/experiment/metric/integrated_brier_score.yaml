@@ -1,0 +1,7 @@
+name: integrated_brier_score
+init:
+  _target_: CMC_utils.metrics.integrated_brier_score
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing
+

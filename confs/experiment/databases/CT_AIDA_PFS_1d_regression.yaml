@@ -1,0 +1,36 @@
+_target_: CMC_utils.datasets.SurvivalFeaturesDataset # DO NOT CHANGE
+_convert_: all # DO NOT CHANGE
+
+name: CT_AIDA_PFS_1d_regression # Name of the dataset
+db_type: features # DO NOT CHANGE
+classes: [ censored, uncensored ] # List of the classes
+label_type: single_risk_survival_regression # multiclass or binary
+
+task: survival_analysis # DO NOT CHANGE
+ngroups_for_cv: 1
+num_events: 1
+max_time: 1825 # 60
+time_divisor: ${oc.select:time_divisor, 1}
+fold: days2PFS_task
+
+path: data/tabular/survival/AIDA/imaging/CT_embeddings.xlsx # Relative path to the file
+
+columns:  # Dictionary containing features names as keys and their types as values # DO NOT REMOVE
+    # Other features to be inserted
+    CT_embedding_path: path
+    ID paziente: id # DO NOT CHANGE THE VALUE, NAME CORRECTLY THE ID VARIABLE
+    # Other features to be inserted
+    PFS: target # DO NOT CHANGE THE VALUE, NAME CORRECTLY THE TARGET VARIABLE
+    days2PFS: target_event_time
+    #6months2PFS: target_event_time
+pandas_load_kwargs:
+  header: 0
+  #index_col: 0
+
+use_bins: True # DO NOT CHANGE
+
+dataset_class: # DO NOT CHANGE
+  _target_: CMC_utils.datasets.SupervisedFeaturesDatasetTorch # DO NOT CHANGE
+  _convert_: all # DO NOT CHANGE
+
+

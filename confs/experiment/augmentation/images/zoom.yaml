@@ -1,0 +1,16 @@
+_target_: CMC_utils.data_augmentation.RandomZoom
+_convert_: all
+
+fill: ${oc.select:image_fill_augmentation, 0}
+# (number or tuple or dict, optional) – Pixel fill value used when the padding_mode is constant. Default is 0.
+# If a tuple of length 3, it is used to fill R, G, B channels respectively. Fill value can be also a dictionary mapping
+# data type to the fill value, e.g. fill={tv_tensors.Image: 127, tv_tensors.Mask: 0} where Image will be filled with 127
+# and Mask will be filled with 0.
+
+side_range:
+  - 0.8
+  - 1.2
+# (sequence of python:floats, optional) – tuple of two floats defines minimum and maximum factors to scale the input size.
+
+p: ${oc.select:augmentation_probability, 0.5}
+# (float, optional) – probability that the zoom operation will be performed.

@@ -1,0 +1,47 @@
+name: DenseNet
+framework: torch
+model_type: imaging
+
+model_tasks:
+  - classification
+  - regression
+
+label_types:
+  - binary
+  - categorical
+  - continuous
+
+set_params_function:
+  _target_: CMC_utils.models.set_sota_model_params
+
+init_params:
+  _target_: CMC_utils.models.get_densenet
+  _convert_: all
+
+  name: densenet121
+
+  num_classes:
+
+  load_weights: True
+
+  extractor: False
+
+fit_params: {}
+
+model_parts:
+  features: [1e-05, 9.62320368593087e-06, 8.550178566873412e-06, 6.9442829902071945e-06, 5.05e-06, 3.1557170097928058e-06, 1.54982143312659e-06, 4.7679631406913065e-07, 1e-07] # [1e-5, 1e-6, 1e-7] #, 1e-8, 1e-9]
+  classifier: ${dl_params.learning_rates}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

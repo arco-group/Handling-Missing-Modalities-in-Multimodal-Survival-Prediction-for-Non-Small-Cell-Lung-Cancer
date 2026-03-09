@@ -1,0 +1,7 @@
+_target_: CMC_utils.preprocessing.SetChannelsFirst
+_convert_: all
+
+channels_order:
+  - 2
+  - 0
+  - 1

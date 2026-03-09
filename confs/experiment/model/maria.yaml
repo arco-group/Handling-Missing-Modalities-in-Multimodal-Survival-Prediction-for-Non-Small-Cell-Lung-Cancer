@@ -1,0 +1,78 @@
+name: maria${.init_params.embed_vector_fun}
+framework: torch
+model_type: tabular
+is_SOTA: False
+
+model_tasks:
+  - classification
+  - regression
+
+label_types:
+  - binary
+  - categorical
+  - continuous
+
+set_params_function:
+  _target_: CMC_utils.models.set_maria_params
+
+init_params:
+  _target_: CMC_utils.models.MARIA
+  _convert_: all
+
+  input_size:
+
+  output_size:
+
+  cat_idxs:
+
+  cat_dims:
+
+  d_token: 768 #1024 
+
+  embedder_initialization: normal
+
+  bias: False # True # False
+
+  # mask_type: 2
+
+  missing_value: ~inf
+
+  num_heads: 16
+
+  feedforward_dim: 1000
+
+  dropout_rate: 0.0
+
+  activation: relu
+
+  num_layers: ${oc.select:num_layers, 6}
+
+  # embed_input: False
+
+  embed_vector_fun: ${oc.select:maria_version, cat}
+
+  n_modalities:
+
+  ntokens_per_modality:
+
+  limit_regression_output: False
+
+  extractor: False
+
+  # device: ${oc.select:device, cuda}
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

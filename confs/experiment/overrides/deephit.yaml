@@ -1,0 +1,9 @@
+shared_net:
+  init_params:
+    hidden_sizes: [ 240, 400 ]
+    drop_rate: 0.5
+    extractor: True
+cs_subnet:
+  init_params:
+    hidden_sizes: [ 400, 240 ]
+    drop_rate: 0.5

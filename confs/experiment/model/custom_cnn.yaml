@@ -1,0 +1,54 @@
+name: CNN
+framework: torch
+model_type: imaging
+
+model_tasks:
+  - classification
+  - regression
+
+label_types:
+  - binary
+  - categorical
+
+set_params_function:
+  _target_: CMC_utils.models.set_custom_cnn_params
+
+init_params:
+  _target_: CMC_utils.models.CustomCNN
+  _convert_: all
+
+  input_channels: 1
+
+  input_size:
+
+  output_size:
+
+  conv_layers: [{out_channels: 32, kernel_size: 3, stride: 1, padding: 1}]#,
+              # {out_channels: 64, kernel_size: 3, stride: 1, padding: 1}]
+
+  fc_layers: [128, 64]
+
+  activation: relu
+
+  use_batchnorm: True
+
+  dropout_prob: 0.2
+
+  extractor: False
+  # bool = False
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

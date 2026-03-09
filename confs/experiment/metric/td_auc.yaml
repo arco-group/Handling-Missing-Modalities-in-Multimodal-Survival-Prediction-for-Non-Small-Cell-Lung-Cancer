@@ -1,0 +1,7 @@
+name: td_auc
+init:
+  _target_: CMC_utils.metrics.td_auc
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing
+

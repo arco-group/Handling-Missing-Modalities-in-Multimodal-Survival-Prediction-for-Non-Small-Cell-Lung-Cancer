@@ -1,0 +1,6 @@
+_target_: CMC_utils.preprocessing.Normalize
+_convert_: all
+
+max_val: 255
+
+min_val: 0

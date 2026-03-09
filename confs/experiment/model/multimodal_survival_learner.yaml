@@ -1,0 +1,69 @@
+name: survivalwrapper
+framework: torch
+model_tasks:
+  - survival_analysis
+
+label_types:
+  - single_risk_survival
+  - competing_risks_survival
+  - single_risk_survival_regression
+
+model_type: any
+is_SOTA: False
+
+
+set_params_function:
+  _target_: CMC_utils.models.set_multimodal_survival_params
+
+init_params:
+
+  _target_: CMC_utils.models.MultimodalSurvivalLearner
+  _convert_: all
+  load_pretrained_unimodal: True
+  projector_dim:  ${oc.select:proj_dims, null}
+  num_events:
+  # int
+
+
+  max_time:
+  # int
+
+  ms_models: ${ms_models}
+
+  shared_net: ${shared_net}
+
+  cs_subnet:
+
+    name: custom_nn
+    framework: torch
+    model_type: tabular
+
+    set_params_function:
+      _target_: CMC_utils.models.set_custom_mlp_params
+
+    init_params:
+      _target_: CMC_utils.models.LitNN_ODST
+      _convert_: all
+
+      input_size:
+      odst: True
+      hidden_dim: 200
+      # list
+      dropout: 0.2
+
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

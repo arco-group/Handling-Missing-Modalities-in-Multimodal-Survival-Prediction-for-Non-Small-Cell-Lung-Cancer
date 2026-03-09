@@ -1,0 +1,52 @@
+name: CPH
+framework: sksurv
+model_type: tabular
+
+model_tasks:
+  - survival_analysis
+
+label_types:
+  - single_risk_survival
+
+set_params_function:
+  _target_: CMC_utils.models.set_survival_params
+
+init_params:
+  _target_: sksurv.linear_model.CoxPHSurvivalAnalysis
+  _convert_: all
+
+  alpha: 0.01
+  # (float, ndarray of shape (n_features,), optional, default: 0) – Regularization parameter for ridge regression penalty.
+  # If a single float, the same penalty is used for all features. If an array, there must be one penalty for each feature.
+  # If you want to include a subset of features without penalization, set the corresponding entries to 0.
+
+  ties: breslow
+  # ("breslow" | "efron", optional, default: "breslow") – The method to handle tied event times.
+  # If there are no tied event times all the methods are equivalent.
+
+  n_iter: ${dl_params.max_epochs}
+  # (int, optional, default: 100) – Maximum number of iterations.
+
+  tol: 1e-9
+  # (float, optional, default: 1e-9) – Convergence criteria. Convergence is based on the negative log-likelihood:
+  # |1 - (new neg. log-likelihood / old neg. log-likelihood) | < tol
+
+  verbose: ${verbose}
+  # (int, optional, default: 0) – Specified the amount of additional debug information during optimization.
+
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_sklearn_model
+
+test_function:
+  _target_: CMC_utils.models.test_sklearn_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pkl
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

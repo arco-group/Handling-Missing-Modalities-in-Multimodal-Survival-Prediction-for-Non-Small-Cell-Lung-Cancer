@@ -1,0 +1,74 @@
+# @package _global_
+
+experiment_name: ${db_name}_${seed}_classification_imaging # DO NOT CHANGE
+experiment_subname: ${model_name} # DO NOT CHANGE
+pipeline: simple # DO NOT REMOVE
+
+seed: 42 # Seed for randomness control
+verbose: 1 # 0 or 1, verbosity of the training
+
+continue_experiment: True # True or False, if the experiment should be continued from where it was interrupted
+
+num_layers: 2
+
+db_name: ${db.name}
+model_name: ${model.name}
+
+initialize_weights: True
+image_caching: True
+
+augmentation_probability: 0.5
+
+image_fill_preprocessing: 0
+image_fill_augmentation: 0
+
+defaults: # DO NOT CHANGE
+  - _self_ # DO NOT CHANGE
+  - paths@: default # DO NOT CHANGE
+  - paths: imaging_experiment_paths # DO NOT CHANGE
+
+  - databases@db: mnist # Name of the configuration file of the dataset
+
+  - cross_validation@test_cv: holdout  # Cross-validation strategy for the test set
+  - cross_validation@val_cv: holdout           # Cross-validation strategy for the validation set
+
+  - preprocessing/images@preprocessing.images.0: channels_first
+  - preprocessing/images@preprocessing.images.1: rgb2gray
+  - preprocessing/images@preprocessing.images.2: normalize
+  - preprocessing/images@preprocessing.images.3: center_crop
+  - preprocessing/images@preprocessing.images.4: resize
+  - preprocessing/images@preprocessing.images.5: gray2rgb
+  #- preprocessing/images@preprocessing.images.5: clamp
+
+  - augmentation/images@preprocessing.images_augmentation.0: random_order_apply
+  #- augmentation/images@preprocessing.images_augmentation.1: zoom
+  - augmentation/images@preprocessing.images_augmentation.1: horizontal_flip
+  #- augmentation/images@preprocessing.images_augmentation.3: vertical_flip
+  - augmentation/images@preprocessing.images_augmentation.2: crop
+  - augmentation/images@preprocessing.images_augmentation.3: rotation
+  #- augmentation/images@preprocessing.images_augmentation.6: cut_out
+
+  - model_type_params@dl_params: dl_params # DO NOT CHANGE
+  - model_type_params@ml_params: ml_params # DO NOT CHANGE
+
+  - model: monai_vit # Name of the model to use
+
+  - model_type_params@train.dl_params: dl_params # DO NOT CHANGE
+
+  - initializer@train.initializer: xavier_uniform # DO NOT CHANGE
+  - loss@train.loss.CE: cross_entropy             # DO NOT CHANGE
+  #- regularizer@train.regularizer.l1: l1          # DO NOT CHANGE
+  #- regularizer@train.regularizer.l2: l2          # DO NOT CHANGE
+  - optimizer@train.optimizer: adam               # DO NOT CHANGE
+  - train_utils@train.manager: train_manager      # DO NOT CHANGE
+
+  - metric@train.set_metrics.auc: auc
+  - metric@train.set_metrics.f1: f1_score # Metric to use for the early stopping
+
+  - metric@performance_metrics.auc: auc # Metric to use for the performance evaluation
+  - metric@performance_metrics.accuracy: accuracy # Metric to use for the performance evaluation
+  - metric@performance_metrics.recall: recall # Metric to use for the performance evaluation
+  - metric@performance_metrics.precision: precision # Metric to use for the performance evaluation
+  - metric@performance_metrics.f1_score: f1_score # Metric to use for the performance evaluation
+  - metric@performance_metrics.mcc: mcc # Metric to use for the performance evaluation
+  - metric@performance_metrics.gmean: gmean # Metric to use for the performance evaluation

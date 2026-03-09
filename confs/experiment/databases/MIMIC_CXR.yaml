@@ -1,0 +1,46 @@
+_target_: CMC_utils.datasets.MultiLabelClassificationDataset # DO NOT CHANGE
+_convert_: all # DO NOT CHANGE
+
+name: MIMIC_CXR # Name of the dataset
+db_type: imaging # DO NOT CHANGE
+classes: [ Atelectasis, Cardiomegaly, Consolidation, Edema, Enlarged Cardiomediastinum, Fracture, Lung Lesion, Lung Opacity, No Finding, Pleural Effusion, Pleural Other, Pneumonia, Pneumothorax, Support Devices ] # List of the classes
+label_type: multilabel # multiclass or binary
+
+replace_classes:
+    -1:
+
+task: multilabelclassification # DO NOT CHANGE
+
+path: ${data_path}/imaging/classification/MIMIC/MIMIC_img_data.csv # Relative path to the file
+#data_folder: ${data_path}/imaging/classification/MIMIC # Relative path to the folder containing the images.
+data_folder: /mimer/NOBACKUP/groups/naiss2023-6-336/dataset_shared/MIMIC/ # Relative path to the folder containing the images.
+# The images' path will be created as data_folder + folder + image
+
+columns:  # Dictionary containing features names as keys and their types as values # DO NOT REMOVE
+  ID:            id
+  folder:        folder
+  img:           image
+  # Other features to be inserted
+  Atelectasis: target
+  Cardiomegaly: target
+  Consolidation: target
+  Edema: target
+  Enlarged Cardiomediastinum: target
+  Fracture: target
+  Lung Lesion: target
+  Lung Opacity: target
+  No Finding: target
+  Pleural Effusion: target
+  Pleural Other: target
+  Pneumonia: target
+  Pneumothorax: target
+  Support Devices: target
+
+pandas_load_kwargs:
+  header: 0
+
+dataset_class:  # DO NOT CHANGE
+  _target_: CMC_utils.datasets.SupervisedImagingDatasetTorch # DO NOT CHANGE
+  _convert_: all # DO NOT CHANGE
+
+  original_images_dims: [ 256, 256 ]

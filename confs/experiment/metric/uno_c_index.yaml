@@ -1,0 +1,7 @@
+name: uno_c_index
+init:
+  _target_: CMC_utils.metrics.uno_c_index
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing
+

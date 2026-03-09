@@ -1,0 +1,88 @@
+name: survivalNN
+framework: torch
+model_type: tabular
+model_tasks:
+  - survival_analysis
+
+label_types:
+  - single_risk_survival
+  - single_risk_survival_regression
+
+set_params_function:
+  _target_: CMC_utils.models.set_survival_wrapper_params
+
+init_params:
+  _target_: CMC_utils.models.SurvivalWrapperRegression
+  _convert_: all
+
+  checkpoint_path:
+
+  load_weights: True
+
+  freeze_model_params: False #True
+
+  num_events:
+  # int
+
+  max_time:
+  # int
+
+  shared_net:
+    name: naim
+    framework: torch
+    model_type: tabular
+
+    set_params_function:
+      _target_: CMC_utils.models.set_naim_params
+
+    init_params:
+      _target_: CMC_utils.models.Embedder
+      _convert_: all
+
+      input_size:
+
+      output_size:
+
+      cat_idxs:
+
+      cat_dims:
+
+      d_token: 16
+
+      embedder_initialization: normal
+
+      bias: True # True
+
+  cs_subnet:
+    name: custom_nn
+    framework: torch
+    model_type: tabular
+
+    set_params_function:
+      _target_: CMC_utils.models.set_custom_mlp_params
+
+    init_params:
+      _target_: CMC_utils.models.LitNN_ODST
+      _convert_: all
+
+      input_size:
+
+      odst: False
+      hidden_dim: 400
+      # list
+      dropout: 0.2
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

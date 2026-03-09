@@ -1,0 +1,6 @@
+method: provided_missing
+#path: /mimer/NOBACKUP/groups/naiss2023-6-336/ccaruso/CMC_utils_project/datasets/imaging/classification/AI4Covid/cross_validation/processed/loCo
+#path: /Users/camillocaruso/LocalDocuments/datasets/imaging/classification/AI4Covid/cross_validation/processed/loCo
+path: ./data/tabular/survival/AIDA/cross_validation/${db.fold}/
+#path: data/tabular/survival/AIDA/cross_validation
+#path: /mimer/NOBACKUP/groups/snic2022-5-277/ccaruso/multiAIDA/datasets/tabular/survival/AIDA/cross_validation/

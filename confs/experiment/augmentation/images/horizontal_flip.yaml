@@ -1,0 +1,5 @@
+_target_: torchvision.transforms.v2.RandomHorizontalFlip
+_convert_: all
+
+p: ${oc.select:augmentation_probability, 0.5}
+# (float, optional) – probability of the input being flipped. Default value is 0.5

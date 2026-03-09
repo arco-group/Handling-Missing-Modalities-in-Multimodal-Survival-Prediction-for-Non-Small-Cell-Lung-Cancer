@@ -1,0 +1,41 @@
+max_epochs: 500 # Maximum number of epochs
+
+min_epochs: 50 # Warm-up number of epochs
+
+batch_size: 32 # 128 # Batch size
+
+init_learning_rate: 1e-5 # Initial learning rate
+
+end_learning_rate: 1e-7 # Final learning rate
+
+learning_rates:
+  min: 1e-8
+  max: 1e-4
+  steps: 12
+
+  #[1e-3, 1e-4, 1e-5, 1e-6, 1e-7, 1e-8] # Learning rates for the scheduler
+  # [ 0.001, 0.000962320368593087, 0.000855017856687341, 0.0006944282990207195, 0.000505, 0.0003155717009792806, 0.000154982143312659, 4.7679631406913064e-05, 1e-05 ]
+  #[0.0001, 9.623203685930869e-05, 8.55017856687341e-05, 6.944282990207195e-05, 5.05e-05, 3.1557170097928055e-05, 1.54982143312659e-05, 4.767963140691306e-06, 1e-06]
+  #[1e-05, 9.62320368593087e-06, 8.550178566873412e-06, 6.9442829902071945e-06, 5.05e-06, 3.1557170097928058e-06, 1.54982143312659e-06, 4.7679631406913065e-07, 1e-07]
+  # [ 1e-06, 9.62320368593087e-07, 8.55017856687341e-07, 6.944282990207195e-07, 5.05e-07, 3.155717009792806e-07, 1.5498214331265902e-07, 4.7679631406913065e-08, 1e-08 ]
+
+
+early_stopping_patience: 50 # 150 # Patience for the early stopping
+
+scheduler_patience: 20 # 50 # Patience for the scheduler
+invert_order_on_lr_end: False # Invert the order of the learning rates at the end of the list provided
+
+initialize_weights: ${oc.select:initialize_weights, True} # Initialize the weights
+
+load_pretrained_parts: ${oc.select:load_model_pretrained_parts.use, False} # Paths to the pretrained parts of the model
+
+performance_tolerance: ${oc.decode:1e-${oc.select:db.decimals, ${oc.select:dbs.0.decimals, '3'}}} # Tolerance for the performance improvement
+
+verbose: ${verbose} # DO NOT CHANGE
+
+verbose_batch: 1 # 0 or 1 or ${verbose}, verbosity of the training for the batch
+
+device: ${oc.select:device, cuda} # cpu or cuda, device to use for training
+
+
+

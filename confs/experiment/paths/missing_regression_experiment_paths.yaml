@@ -1,0 +1,15 @@
+experiment: ${hydra:runtime.output_dir}/${experiment_name} # DO NOT REMOVE
+cv_base_path: ${.experiment}/${test_cv.method}_${val_cv.method} # DO NOT REMOVE
+cv: ${.cv_base_path}/cross_validation # DO NOT REMOVE
+missing_masks: ${.cv_base_path}/missing_masks/${missing_generation.train.apply_to}_${missing_generation.train.method}
+preprocessing: # DO NOT REMOVE
+  numerical: ${..cv_base_path}/preprocessing/numerical_preprocessing/${preprocessing.numerical.method}_${missing_generation.train.apply_to}_${missing_generation.train.method} # DO NOT REMOVE
+  categorical: ${..cv_base_path}/preprocessing/categorical_preprocessing/${preprocessing.categorical.method}_${missing_generation.train.apply_to}_${missing_generation.train.method} # DO NOT REMOVE
+  imputer: ${..cv_base_path}/preprocessing/imputer/${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_${missing_generation.train.apply_to}_${missing_generation.train.method} # DO NOT REMOVE
+  target: ${..cv_base_path}/preprocessing/target # DO NOT REMOVE
+model: ${.cv_base_path}/saved_models/${model_name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_${missing_generation.train.apply_to}_${missing_generation.train.method} # DO NOT REMOVE
+predictions: ${.cv_base_path}/predictions/${model_name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_${missing_generation.train.apply_to}_${missing_generation.train.method} # DO NOT REMOVE
+results: ${.cv_base_path}/results/${model_name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_${missing_generation.train.apply_to}_${missing_generation.train.method} # DO NOT REMOVE
+
+logs: ${.cv_base_path}/logs/${experiment_name}_${experiment_subname} # DO NOT REMOVE
+configs: ${.cv_base_path}/configs/${experiment_name}_${experiment_subname} # DO NOT REMOVE

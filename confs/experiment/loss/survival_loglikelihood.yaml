@@ -1,0 +1,12 @@
+name: survival_loglikelihood
+init_params:
+  _target_: CMC_utils.losses.SurvivalLogLikelihoodLoss
+
+  num_events:
+
+  max_time:
+
+set_params_function:
+  _target_: CMC_utils.losses.set_survival_loss_params
+
+alpha: 1

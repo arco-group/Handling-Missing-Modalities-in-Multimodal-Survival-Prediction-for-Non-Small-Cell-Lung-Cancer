@@ -1,0 +1,57 @@
+name: MLP
+framework: torch
+model_type: tabular
+
+model_tasks:
+  - classification
+  - survival_analysis
+
+label_types:
+  - binary
+  - categorical
+  - single_risk_survival_regression
+
+set_params_function:
+  _target_: CMC_utils.models.set_custom_mlp_survival_regression_params
+
+init_params:
+  _target_: CMC_utils.models.CustomMLPSurvival
+  _convert_: all
+
+  num_events:
+  # int
+
+  max_time:
+  # int
+
+  input_size:
+
+  hidden_sizes: [ 300, 300, 300 ]
+  # list
+
+  output_size: 1
+  # int
+
+  activation_functions: relu # [ sigmoid, relu, relu ]
+  # Union[ list, str ]
+
+  drop_rate:
+
+  extractor: False
+  # bool = False
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

@@ -1,0 +1,10 @@
+device: cuda # cuda # cpu # mps
+python_version: ${python_version:micro}
+
+defaults:
+  - _self_
+  - experiment: survival_experiment # classification #MIMIC_multimodal # multimodal_joint_fusion_classification_with_missing_generation
+  - experiment/paths/system@: local # alvis_snic # local # alvis # SSD
+  # - override hydra/launcher: joblib
+
+

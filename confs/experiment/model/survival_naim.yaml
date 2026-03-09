@@ -1,0 +1,117 @@
+name: survival_naim
+framework: torch
+model_type: tabular
+
+model_tasks:
+  - survival_analysis
+
+label_types:
+  - single_risk_survival
+  - competing_risks_survival
+
+set_params_function:
+  _target_: CMC_utils.models.set_survival_wrapper_params
+
+init_params:
+  _target_: CMC_utils.models.SurvivalWrapper
+  _convert_: all
+
+  checkpoint_path:
+
+  load_weights: True
+
+  freeze_model_params: False #True
+
+  num_events:
+  # int
+
+  max_time:
+  # int
+
+  shared_net:
+    name: naim
+    framework: torch
+    model_type: tabular
+
+    set_params_function:
+      _target_: CMC_utils.models.set_naim_params
+
+    init_params:
+      _target_: CMC_utils.models.NAIM
+      _convert_: all
+
+      input_size:
+
+      output_size:
+
+      cat_idxs:
+
+      cat_dims:
+
+      d_token: 16
+
+      embedder_initialization: normal
+
+      bias: False # True
+
+      missing_value: ~inf
+
+      num_heads: 2 # 4 is the best
+
+      feedforward_dim: 128 # 400 is the best
+
+      dropout_rate: 0.2
+
+      activation: relu
+
+      num_layers: ${oc.select:num_layers, 3}
+
+      extractor: True # False
+
+      projector_dim: null # 64
+
+      embed_vector_fun: cat
+
+
+
+  cs_subnet:
+    name: custom_mlp
+    framework: torch
+    model_type: tabular
+
+    set_params_function:
+      _target_: CMC_utils.models.set_custom_mlp_params
+
+    init_params:
+      _target_: CMC_utils.models.CustomMLP
+      _convert_: all
+
+      input_size:
+
+      hidden_sizes: [32]
+
+      output_size:
+
+      activation_functions: relu # [ sigmoid, relu, gelu, relu ]
+      # Union[ list, str ]
+
+      drop_rate: 0.2
+      # float or None
+
+      extractor: False
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

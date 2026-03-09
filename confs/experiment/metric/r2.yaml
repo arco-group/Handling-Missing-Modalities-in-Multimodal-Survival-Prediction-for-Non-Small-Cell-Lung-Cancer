@@ -1,0 +1,18 @@
+name: r2
+init:
+  _target_: CMC_utils.metrics.R2
+
+  sample_weight:
+  # array-like of shape (n_samples,), default=None
+  # Sample weights.
+
+  multioutput: uniform_average
+  # {‘raw_values’, ‘uniform_average’} or array-like of shape (n_outputs,), default=’uniform_average’
+  # Defines aggregating of multiple output values. Array-like value defines weights used to average errors.
+  # ‘raw_values’:
+  #     Returns a full set of errors in case of multioutput input.
+  # ‘uniform_average’:
+  #     Errors of all outputs are averaged with uniform weight.
+
+set_params_function:
+  _target_: CMC_utils.miscellaneous.do_nothing

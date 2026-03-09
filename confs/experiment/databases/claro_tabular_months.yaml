@@ -1,0 +1,19 @@
+_target_: CMC_utils.datasets.SurvivalDataset
+_convert_: all
+
+name: CLARO_tabular_months
+db_type: tabular
+classes: [ censored, uncensored ]
+
+num_events: 1
+max_time: 72
+
+label_type: single_risk_survival
+
+task: survival_analysis
+
+path: ${data_path}/tabular/survival/CLARO_tabular/months
+
+dataset_class:
+  _target_: CMC_utils.datasets.SupervisedTabularDatasetTorch
+  _convert_: all

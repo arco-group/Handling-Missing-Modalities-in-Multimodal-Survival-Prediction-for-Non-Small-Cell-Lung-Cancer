@@ -1,0 +1,4 @@
+method: MCAR_sample
+missing_fraction: 0.25
+apply_to: ${oc.select:multimodal_missing_generation, features}
+seed: ${seed}

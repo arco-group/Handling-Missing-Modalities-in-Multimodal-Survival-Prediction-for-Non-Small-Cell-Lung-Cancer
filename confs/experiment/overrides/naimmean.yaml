@@ -1,0 +1,2 @@
+init_params:
+  embed_vector_fun: mean

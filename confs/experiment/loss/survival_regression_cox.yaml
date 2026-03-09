@@ -1,0 +1,7 @@
+name: survival_ranking_singlevalue
+init_params:
+  _target_: CMC_utils.losses.CoxLoss
+set_params_function:
+  _target_: CMC_utils.losses.set_survival_regression_loss_params
+
+alpha: 1.0

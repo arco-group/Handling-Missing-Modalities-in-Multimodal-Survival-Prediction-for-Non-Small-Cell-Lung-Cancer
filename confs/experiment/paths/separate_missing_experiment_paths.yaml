@@ -1,0 +1,13 @@
+experiment: ${hydra:runtime.output_dir}/${experiment_name}_${experiment_subname} # DO NOT REMOVE
+cv: ${.experiment}/cross_validation # DO NOT REMOVE
+missing_masks: ${.experiment}/missing_masks
+preprocessing: # DO NOT REMOVE
+  numerical: ${..experiment}/preprocessing/numerical_preprocessing # DO NOT REMOVE
+  categorical: ${..experiment}/preprocessing/categorical_preprocessing # DO NOT REMOVE
+  imputer: ${..experiment}/preprocessing/imputer # DO NOT REMOVE
+model: ${.experiment}/saved_models # DO NOT REMOVE
+predictions: ${.experiment}/predictions # DO NOT REMOVE
+results: ${.experiment}/results # DO NOT REMOVE
+
+logs: ${.experiment}/logs # DO NOT REMOVE
+configs: ${.experiment}/configs # DO NOT REMOVE

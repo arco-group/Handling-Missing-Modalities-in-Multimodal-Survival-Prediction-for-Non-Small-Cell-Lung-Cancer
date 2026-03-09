@@ -1,0 +1,25 @@
+_target_: torchvision.transforms.v2.RandomRotation
+_convert_: all
+
+degrees: [-15, 15]
+# (sequence or number) – Range of degrees to select from.
+# If degrees is a number instead of sequence like (min, max), the range of degrees will be (-degrees, +degrees).
+
+# interpolation:
+# (InterpolationMode, optional) – Desired interpolation enum defined by torchvision.transforms.InterpolationMode.
+# Default is InterpolationMode.NEAREST. If input is Tensor, only InterpolationMode.NEAREST, InterpolationMode.BILINEAR
+# are supported. The corresponding Pillow integer constants, e.g. PIL.Image.BILINEAR are accepted as well.
+
+expand: False
+# (bool, optional) – Optional expansion flag.
+# If true, expands the output to make it large enough to hold the entire rotated image.
+# If false or omitted, make the output image the same size as the input image. Note that the expand flag assumes rotation around the center (see note below) and no translation.
+
+center:
+# (sequence, optional) – Optional center of rotation, (x, y). Origin is the upper left corner. Default is the center of the image.
+
+fill: ${oc.select:image_fill_augmentation, 0}
+# (number or tuple or dict, optional) – Pixel fill value used when the padding_mode is constant. Default is 0.
+# If a tuple of length 3, it is used to fill R, G, B channels respectively.
+# Fill value can be also a dictionary mapping data type to the fill value, e.g. fill={tv_tensors.Image: 127, tv_tensors.Mask: 0}
+# where Image will be filled with 127 and Mask will be filled with 0.

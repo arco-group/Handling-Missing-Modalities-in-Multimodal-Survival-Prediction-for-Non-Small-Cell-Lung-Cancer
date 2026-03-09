@@ -1,0 +1,6 @@
+_target_: CMC_utils.preprocessing.Clamp
+_convert_: all
+
+min_val: 0
+
+max_val: 1

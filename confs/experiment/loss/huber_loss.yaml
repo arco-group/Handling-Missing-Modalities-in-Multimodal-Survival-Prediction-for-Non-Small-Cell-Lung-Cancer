@@ -1,0 +1,10 @@
+name: huber_mean_loss
+init_params:
+  _target_: torch.nn.HuberLoss
+  reduction: mean
+  delta:
+
+set_params_function:
+  _target_: CMC_utils.losses.set_huber_mean_loss_params
+
+alpha: 1

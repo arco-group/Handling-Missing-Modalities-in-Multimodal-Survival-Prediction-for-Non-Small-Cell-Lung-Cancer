@@ -1,0 +1,85 @@
+name: ViT
+framework: torch
+model_type: imaging
+
+model_tasks:
+  - classification
+  - regression
+
+label_types:
+  - binary
+  - categorical
+  - continuous
+
+set_params_function:
+  _target_: CMC_utils.models.set_monai_params
+
+init_params:
+  _target_: CMC_utils.models.MonaiViT
+  _convert_: all
+
+  in_channels:
+  # (int) – dimension of input channels.
+
+  img_size:
+  # (Union[Sequence[int], int]) – dimension of input image.
+
+  patch_size: 16
+  # (Union[Sequence[int], int]) – dimension of patch size.
+
+  hidden_size: 384
+  # (int, optional) – dimension of hidden layer. Defaults to 768.
+
+  mlp_dim: 1024
+  # (int, optional) – dimension of feedforward layer. Defaults to 3072.
+
+  num_layers: ${oc.select:num_layers, 12}
+  # (int, optional) – number of transformer blocks. Defaults to 12.
+
+  num_heads: 12
+  #(int, optional) – number of attention heads. Defaults to 12.
+
+  proj_type: conv
+  # (str, optional) – patch embedding layer type. Defaults to “conv”.
+
+  pos_embed_type: learnable
+  # (str, optional) – position embedding type. Defaults to “learnable”.
+
+  classification: False
+  # (bool, optional) – bool argument to determine if classification is used. Defaults to False.
+
+  num_classes:
+  # (int, optional) – number of classes if classification is used. Defaults to 2.
+
+  dropout_rate: 0.0
+  # (float, optional) – fraction of the input units to drop. Defaults to 0.0.
+
+  spatial_dims: 3
+  # (int, optional) – number of spatial dimensions. Defaults to 3.
+
+  post_activation: ""
+  # (str, optional) – add a final acivation function to the classification head when classification is True. Default to “Tanh” for nn.Tanh(). Set to other values to remove this function.
+
+  qkv_bias: False
+  # (bool, optional) – apply bias to the qkv linear layer in self attention block. Defaults to False.
+
+  save_attn: False
+  # (bool, optional) – to make accessible the attention in self attention block. Defaults to False.
+
+  extractor: False
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

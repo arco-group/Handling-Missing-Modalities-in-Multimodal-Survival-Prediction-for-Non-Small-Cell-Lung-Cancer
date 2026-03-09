@@ -1,5 +1,5 @@
 *.DS_Store
-/data
+data
 emb_env
 Merlin
 tests
@@ -24,3 +24,7 @@ data_cache
 dist/
 build/
 *.egg   
+CT-FM
+
+
+

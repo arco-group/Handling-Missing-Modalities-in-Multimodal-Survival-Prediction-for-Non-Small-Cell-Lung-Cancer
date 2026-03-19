@@ -46,10 +46,11 @@ init_params:
       _convert_: all
 
       input_size:
-      odst: true
+      odst: false
       hidden_dim: 200
       # list
       dropout: 0.2
+
 
 fit_params: {}
 

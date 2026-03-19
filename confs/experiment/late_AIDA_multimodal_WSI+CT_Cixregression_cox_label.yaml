@@ -29,8 +29,8 @@ initialize_weights: True
 load_model_pretrained_parts:
   use: false
   freeze_model_params: ${freeze_model_params}
-  ms_models[0]: outputs/fold_specific/wsi_cox-label_cix/${ms_models.0.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.0.name}_${seed}_time2event
-  ms_models[1]: outputs/fold_specific/ct_cox-label_cix/${ms_models.1.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.1.name}_${seed}_time2event
+  ms_models[0]: ${output_path}/wsi_cox-label_cix/${ms_models.0.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.0.name}_${seed}_time2event
+  ms_models[1]: ${output_path}/ct_cox-label_cix/${ms_models.1.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.1.name}_${seed}_time2event
 #  ms_models[2]: outputs/fold_specific/tabular_cox-label_cix/${ms_models.2.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.2.name}_${seed}_time2event
 defaults:
   - _self_

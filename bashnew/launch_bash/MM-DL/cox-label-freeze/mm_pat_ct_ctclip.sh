@@ -13,7 +13,14 @@ for task in "${tasks[@]}"; do
     for target in "${targets[@]}"; do
       experiment="AIDA_multimodal_WSI+CT_${task}_freeze_ms_cox_label"
       echo "🚀 Running experiment: $experiment"
-      python ./main.py experiment="$experiment" experiment/model@shared_net=${model} continue_experiment=true mode=wsi_ct_cox-label_cix experiment/databases@dbs.0=WSI_AIDA_${target} experiment/databases@dbs.1=CT_AIDA_${target} db_name=WSI+CT_multimodal_${target} &
+      python ./main.py experiment="$experiment" \
+      experiment/paths/system@_global_=local_ctclip \
+      experiment/model@shared_net=${model} \
+      continue_experiment=true \
+      mode=wsi_ct_cox-label_cix \
+      experiment/databases@dbs.0=WSI_AIDA_${target} \
+      experiment/databases@dbs.1=CT_ctclip_AIDA_${target} \
+      db_name=WSI+CT_multimodal_${target} &
       COUNT=$((COUNT + 1))
       if (( COUNT % MAX_JOBS == 0 )); then
         wait

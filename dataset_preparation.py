@@ -18,7 +18,7 @@ def compute_cardinality_n_missing(column, remove_modalities=False):
 
 
 def CT_embeddings(output_path: str) -> None:
-    emb_dir = "data/tabular/survival/AIDA/imaging/embeddings_2"
+    emb_dir = "data/tabular/survival/AIDA/imaging/embeddings_ctfm"
     emb_dir = Path(emb_dir)
 
 
@@ -42,7 +42,7 @@ def CT_embeddings(output_path: str) -> None:
 
 
     # DROP ROWS WITHOUT EMBEDDING
-    data.to_excel(os.path.join(output_path, "CT_embeddings_2.xlsx"))
+    data.to_excel(os.path.join(output_path, "CT_embeddings_ctfm.xlsx"))
 
 
 

@@ -1,26 +1,27 @@
 #!/bin/bash
 
-echo pwd # Print the current working directory
-
 # Define arrays
 tasks=("Cix-regression")
 models=("SGB" "RSF" "CPH")
-targets=("OS_1d_regression" ) # "PFS_1d_regression" "LocalProgression_1d_regression" "M+_1d_regression"
-
+targets=("OS_1d_regression") 
 MAX_JOBS=4
 COUNT=0
 PIDS=()
 # Trap Ctrl+C (SIGINT) to kill all child processes
 trap 'echo "🛑 Caught Ctrl+C, killing all running jobs..."; kill ${PIDS[@]} 2>/dev/null; exit 1' INT
 
-
-# Loop over all combinations
 for task in "${tasks[@]}"; do
   for model in "${models[@]}"; do
     for target in "${targets[@]}"; do
       experiment="AIDA_CT_${task}_${model}"
-      echo "🚀 Running experiment: $experiment"
-      python ./main.py experiment="$experiment" continue_experiment=true experiment/preprocessing/label@preprocessing.label=cox mode=ct_cox-label_cix experiment/databases@db=CT_AIDA_${target}  &
+      echo "🚀 Running experiment: $experiment ($target)"
+
+      python ./main.py experiment="$experiment" \
+        experiment/paths/system@_global_=local_ctfm \
+        continue_experiment=false \
+        experiment/preprocessing/label@preprocessing.label=cox \
+        experiment/databases@db=CT_ctfm_AIDA_${target} \
+        mode=ct_cox-label_cix &
       pid=$!
       PIDS+=($pid)
       COUNT=$((COUNT + 1))
@@ -34,3 +35,6 @@ for task in "${tasks[@]}"; do
   done
 done
 
+# Final wait for any remaining background jobs
+wait
+echo "✅ All experiments completed."

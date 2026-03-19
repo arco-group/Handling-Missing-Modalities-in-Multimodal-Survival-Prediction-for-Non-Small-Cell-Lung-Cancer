@@ -1,4 +1,4 @@
-name: ConcatODST
+name: ConcatFC
 framework: torch
 model_type: tabular
 is_SOTA: False
@@ -23,10 +23,11 @@ init_params:
 
   extractor: True
 
+
   dropout: 0.2
   d_token_input: 2
 
-  odst: true
+  odst: false
 
   feedforward_dim: 400
   # device: ${oc.select:device, cuda}

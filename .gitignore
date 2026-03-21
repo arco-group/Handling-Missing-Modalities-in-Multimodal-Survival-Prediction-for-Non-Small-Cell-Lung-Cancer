@@ -1,5 +1,5 @@
 *.DS_Store
-/data
+data
 emb_env
 Merlin
 tests
@@ -25,3 +25,8 @@ dist/
 build/
 *.egg   
 .claude
+CT-FM
+*.pt
+
+
+

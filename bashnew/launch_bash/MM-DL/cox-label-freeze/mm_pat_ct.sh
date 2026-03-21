@@ -1,12 +1,11 @@
 #!/bin/bash
-
 echo pwd # Print the current working directory
 # Define arrays
 tasks=("Cixregression")
-models=("concat_model_ODST" ) # "CrossAttentionMissingModalityMasking" "CrossAttentionMissingModality" "survival_maria"
-targets=("OS_1d_regression") #  "PFS_1d_regression" "LocalProgression_1d_regression" "M+_1d_regression"
-# Loop over all combinations
+models=("concat_model_FC" ) # "concat_model_FC" 
+targets=("OS_1d_regression") # 
 
+# Loop over all combinations
 MAX_JOBS=1
 COUNT=0
 for task in "${tasks[@]}"; do

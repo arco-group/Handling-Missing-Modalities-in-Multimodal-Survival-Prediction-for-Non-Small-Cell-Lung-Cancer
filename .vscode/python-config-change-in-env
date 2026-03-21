@@ -1,0 +1,54 @@
+#!/bin/bash
+# Wrapper for HPC module-based Python runtime used by this venv.
+pick_codeserver_node() {
+  command -v squeue >/dev/null 2>&1 || return 1
+  squeue -h -u "$USER" -n bc_alvis_codeserver -o "%N %L" 2>/dev/null | awk '
+    function tosec(t, a, n, d, h, m, s) {
+      if (t == "" || t == "N/A" || t == "UNLIMITED") return -1
+      d = 0
+      if (index(t, "-")) {
+        split(t, a, "-")
+        d = a[1]
+        t = a[2]
+      }
+      n = split(t, a, ":")
+      if (n == 3) {
+        h = a[1]; m = a[2]; s = a[3]
+      } else if (n == 2) {
+        h = 0; m = a[1]; s = a[2]
+      } else {
+        h = 0; m = 0; s = a[1]
+      }
+      return d * 86400 + h * 3600 + m * 60 + s
+    }
+    {
+      node = $1
+      sub(/,.*/, "", node)
+      score = tosec($2)
+      if (score > best) {
+        best = score
+        bestnode = node
+      }
+    }
+    END {
+      if (bestnode != "") print bestnode
+    }'
+}
+
+NODE="${DITUNET_NODE:-$(pick_codeserver_node)}"
+NODE="${NODE:-alvis9-06}"
+echo "Selected node: $NODE" >&2
+# Force execution on target compute node when launched from login node.
+if [ -z "${DITUNET_ON_NODE:-}" ] && [ "$(hostname -s)" != "$NODE" ]; then
+  REMOTE_CMD="$(printf '%q ' "$0" "$@")"
+  exec ssh -o ConnectTimeout=5 "$NODE" \
+    "export DITUNET_ON_NODE=1; cd $(printf '%q' "$PWD"); exec $REMOTE_CMD"
+fi
+
+if ! command -v module >/dev/null 2>&1; then
+  [ -f /usr/share/lmod/lmod/init/bash ] && source /usr/share/lmod/lmod/init/bash
+fi
+if command -v module >/dev/null 2>&1; then
+  module load Python/3.11.3-GCCcore-12.3.0 >/dev/null 2>&1
+fi
+exec "$(dirname "$0")/python.real" "$@"

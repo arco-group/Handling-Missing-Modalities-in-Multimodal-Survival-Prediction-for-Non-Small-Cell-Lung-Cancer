@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo pwd # Print the current working directory
+
 # Define arrays
 tasks=("Cix-regression")
 models=("SGB" "RSF" "CPH")
@@ -11,7 +12,6 @@ COUNT=0
 PIDS=()
 # Trap Ctrl+C (SIGINT) to kill all child processes
 trap 'echo "🛑 Caught Ctrl+C, killing all running jobs..."; kill ${PIDS[@]} 2>/dev/null; exit 1' INT
-
 
 
 # Loop over all combinations

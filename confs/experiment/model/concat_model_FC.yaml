@@ -1,0 +1,49 @@
+name: ConcatFC
+framework: torch
+model_type: tabular
+is_SOTA: False
+
+model_tasks:
+  - survival_analysis
+
+label_types:
+  - single_risk_survival
+  - competing_risks_survival
+
+set_params_function:
+  _target_: CMC_utils.models.set_custom_mlp_params
+
+init_params:
+  _target_: CMC_utils.models.ConcatModelODST
+  _convert_: all
+
+  input_size:
+
+  output_size: 400
+
+  extractor: True
+
+
+  dropout: 0.2
+  d_token_input: 2
+
+  odst: false
+
+  feedforward_dim: 400
+  # device: ${oc.select:device, cuda}
+
+fit_params: {}
+
+train_function:
+  _target_: CMC_utils.models.train_torch_model
+
+test_function:
+  _target_: CMC_utils.models.test_torch_model
+
+save_function:
+  _target_: CMC_utils.save_load.save_model
+
+file_extension: pth
+
+load_function:
+  _target_: CMC_utils.save_load.load_model

@@ -49,13 +49,11 @@ def load_pretrained_weights(model: Union[Module, ModuleList, Sequential], pretra
         if isinstance(module_info_path, bool):
             continue
 
-        if "ms_models" in model.named_modules():
-            modules = list(model.ms_models.named_modules())[0][-1]
-        else:
-            modules = list(model.named_modules())[0][-1]
+        
+        modules = list(model.ms_models.named_modules())[0][-1]
         if 'ms_models' in module_name or 'model' in module_name:
 
-            module = modules[index-2]
+            module = modules[index-1]
 
             parts = module_info_path.split('/')[-1].split("CTIx" if "CTIx" in module_info_path else "Cixregression")
             if len(parts) == 2:
@@ -71,7 +69,7 @@ def load_pretrained_weights(model: Union[Module, ModuleList, Sequential], pretra
                 print("⚠️ 'CTIx' not found in filename")
             if len(candidates) == 0:
                 print(f"⚠️ No candidates found for {module_name} in {module_info_path} || dir name parts: {os.listdir(module_info_path)}")
-                continue
+                #continue
             module_info_path = os.path.join(os.path.dirname(module_info_path), candidates[0])
 
             if os.path.exists(module_info_path):
@@ -91,7 +89,6 @@ def load_pretrained_weights(model: Union[Module, ModuleList, Sequential], pretra
                             continue
                         else:
                             model_exp_path = os.path.join(saved_models, f"{fold}_0.pth")
-
 
             module_pretrained = torch.load(model_exp_path, map_location="cpu", weights_only=False)
             state_dict = module_pretrained if "state_dict" not in module_pretrained else module_pretrained["state_dict"]

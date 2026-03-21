@@ -6,7 +6,7 @@ pipeline: multimodal_joint_fusion
 missing_percentages: [0.0] # , 0.05, 0.25, 0.5]
 test_missing_percentages:  [[0.0, 0.0], [0.25, 0.0] , [0.5, 0.0], [0.75, 0.0], [1.0, 0.0], [0.0, 0.25], [0.0, 0.5], [0.0, 0.75], [0.0, 1.0]]
 multimodal_missing_generation: separate_modalities_previously_missing
-proj_dims: [0, 0]
+proj_dims: [0, 0] # CT, tabular
 seed: 42
 verbose: 1
 time_divisor: 1
@@ -44,9 +44,9 @@ initialize_weights: True
 load_model_pretrained_parts:
   use: true
   freeze_model_params: ${freeze_model_params}
-  ms_models[0]: outputs/fold_specific/wsi_cox-label_cix/${ms_models.0.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.0.name}_${seed}_time2event
+  ms_models[0]: ${output_path}/wsi_cox-label_cix/${ms_models.0.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.0.name}_${seed}_time2event
   #ms_models[2]: outputs/fold_specific/ct_cox-label_cix/${ms_models.1.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.1.name}_${seed}_time2event
-  ms_models[1]: outputs/fold_specific/tabular_cox-label_cix/${ms_models.1.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.1.name}_${seed}_time2event
+  ms_models[1]: ${output_path}/tabular_cox-label_cix/${ms_models.1.name}_${preprocessing.imputer.method}_${preprocessing.numerical.method}_${preprocessing.categorical.method}_CTIx_${dbs.1.name}_${seed}_time2event
 shared_net:
 defaults:
   - _self_

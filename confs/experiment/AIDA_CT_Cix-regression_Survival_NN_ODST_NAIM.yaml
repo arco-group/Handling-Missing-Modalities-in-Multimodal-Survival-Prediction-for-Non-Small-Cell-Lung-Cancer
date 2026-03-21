@@ -7,9 +7,8 @@ pipeline: simple
 seed: 42
 verbose: 1
 time_divisor: 1
-
 continue_experiment: True # True # False
-projector_dim: 256
+#projector_dim: 0
 db_name: ${db.name}
 model_name: ${oc.select:shared_net.name, ${model.name}}
 mode: ct_cix

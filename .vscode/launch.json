@@ -6,12 +6,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "LATE FUSION-CT-TAB",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
-            "args": ["experiment=late_AIDA_multimodal_CT+tabular_Cixregression_cox_label_.yaml"]
+            "python": "${workspaceFolder}/.AIDA_MM/bin/python",
+            "args": [
+                "experiment=late_AIDA_multimodal_CT+tabular_Cixregression_cox_label_.yaml"
+            ]
         },
         {
             "name": "LATE FUSION-WSI-TAb",
@@ -19,7 +29,10 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
-            "args": ["experiment=late_AIDA_multimodal_WSI+tabular_Cixregression_cox_label.yaml"]
+            "python": "${workspaceFolder}/.AIDA_MM/bin/python",
+            "args": [
+                "experiment=late_AIDA_multimodal_WSI+tabular_Cixregression_cox_label.yaml"
+            ]
         },
         {
             "name": "LATE FUSION-WSI-TAb-CT",
@@ -27,55 +40,92 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
-            "args": ["experiment=late_AIDA_multimodal_WSI+CT+tabular_Cixregression_cox_label.yaml"]
+            "python": "${workspaceFolder}/.AIDA_MM/bin/python",
+            "args": [
+                "experiment=late_AIDA_multimodal_WSI+CT+tabular_Cixregression_cox_label.yaml"
+            ]
         },
         {
             "name": "Python Debugger: Current File",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
+            "python": "${workspaceFolder}/.AIDA_MM/bin/python",
             "console": "integratedTerminal"
         },
         {
+            "name": "MM-DL freeze WSI+CT",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
+            "justMyCode": false,
+            "args": [
+                "experiment=AIDA_multimodal_WSI+CT_Cixregression_freeze_ms_cox_label",
+                "experiment/model@shared_net=concat_model_ODST",
+                "continue_experiment=true",
+                "mode=wsi_ct_cox-label_cix",
+                "experiment/databases@dbs.0=WSI_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.1=CT_AIDA_OS_1d_regression",
+                "db_name=dbg-WSI+CT_multimodal_OS_1d_regression"
+            ]
+        },
+        {
+            "name": "MM-DL freeze WSI+CT+TAB (CTFM)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
+            "justMyCode": false,
+            "args": [
+                "experiment=AIDA_multimodal_WSI+CT+tabular_Cixregression_freeze_ms_cox_label",
+                "experiment/paths/system@_global_=local_ctfm",
+                "experiment/model@shared_net=concat_model_FC",
+                "continue_experiment=true",
+                "mode=wsi_ct_tab_cox-label_cix",
+                "experiment/databases@dbs.0=WSI_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.1=CT_ctfm_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.2=AIDA_OS_1d_regression",
+                "db_name=WSI+CT+tabular_multimodal_OS_1d_regression"
+            ]
+        },
+        {
+            "name": "CT-CLIP Cix-regression",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
+            "justMyCode": false,
+            "args": [
+                "experiment=AIDA_CT_Cix-regression_Survival_NN",
+                "experiment/paths/system@_global_=local_ctclip",
+                "continue_experiment=false",
+                "experiment/preprocessing/label@preprocessing.label=cox",
+                "experiment/databases@db=CT_ctclip_AIDA_OS_1d_regression",
+                "mode=ct_cox-label_cix"
+            ]
+        },
+        {
             "name": "Run Multimodal AIDA Experiment",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
             "args": [
-                "experiment=AIDA_multimodal_WSI+CT_${input:task}_cox_label",
-                "experiment/model@shared_net=${input:model}",
+                "experiment=AIDA_multimodal_WSI+CT_Cixregression_cox_label",
+                "experiment/model@shared_net=concat_model_ODST",
                 "continue_experiment=true",
                 "mode=wsi_ct_cox-label_cix",
-                "experiment/databases@dbs.0=WSI_AIDA_${input:target}",
-                "experiment/databases@dbs.1=CT_AIDA_${input:target}",
+                "experiment/databases@dbs.0=WSI_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.1=CT_AIDA_OS_1d_regression",
                 //"experiment/databases@dbs.2=AIDA_${input:target}",
-                "db_name=WSI+CT_multimodal_${input:target}"
+                "db_name=debug_WSI+CT_multimodal_OS_1d_regression"
             ],
-            "env": {
-                "HYDRA_FULL_ERROR": "1"
-            },
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
             "justMyCode": false
         }
     ],
-    "inputs": [
-        {
-            "id": "task",
-            "type": "promptString",
-            "description": "Task name (e.g., cix)",
-            "default": "Cixregression"
-        },
-        {
-            "id": "model",
-            "type": "promptString",
-            "description": "Model identifier",
-            "default": "concat_model_ODST"
-        },
-        {
-            "id": "target",
-            "type": "promptString",
-            "description": "Target variable (e.g., OS_1d_regression)",
-            "default": "OS_1d_regression"
-        }
-    ]
 }

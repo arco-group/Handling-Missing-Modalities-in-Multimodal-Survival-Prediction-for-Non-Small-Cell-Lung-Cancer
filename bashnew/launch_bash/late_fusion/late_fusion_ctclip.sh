@@ -36,7 +36,7 @@ for task in "${tasks[@]}"; do
       experiment/databases@dbs.0=WSI_AIDA_${target} \
       experiment/databases@dbs.1=CT_ctclip_AIDA_${target} \
       experiment/databases@dbs.2=AIDA_${target} \
-      continue_experiment=true \ 
+      continue_experiment=true \
       model_name=late_fusion_${model} &
 
       echo "Started late fusion for model: ${model}, task: ${task}, target: ${target}"

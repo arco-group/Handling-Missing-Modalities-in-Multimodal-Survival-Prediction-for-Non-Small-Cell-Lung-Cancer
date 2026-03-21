@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(LATE_BASE=\"/mimer/NOBACKUP/groups/naiss2023-6-336/AIDA_multimodal_F&C/outputs/fold_specific_ctfm/late_wsi_ct_tab_cox-label_cix/late_fusion_survival_NN_ODST_NAIM_WSI+CT+tabular_multimodal_42_multimodal_late_fusion_classification_with_missing_generation_over_test\")",
+      "Read(//mimer/NOBACKUP/groups/naiss2023-6-336/AIDA_multimodal_F&C/$LATE_BASE/provided_provided/results/**)",
+      "Bash(LATE_BASE=\"/mimer/NOBACKUP/groups/naiss2023-6-336/AIDA_multimodal_F&C/outputs/fold_specific_ctfm/late_wsi_ct_tab_cox-label_cix/late_fusion_survival_NN_ODST_NAIM_WSI+CT+tabular_multimodal_42_multimodal_late_fusion_classification_with_missing_generation_over_test\" find \"$LATE_BASE\" -name \"averages_classes_average_performance.csv\")",
+      "Bash(LATE_BASE=\"/mimer/NOBACKUP/groups/naiss2023-6-336/AIDA_multimodal_F&C/outputs/fold_specific_ctfm/late_wsi_ct_tab_cox-label_cix/late_fusion_survival_NN_ODST_NAIM_WSI+CT+tabular_multimodal_42_multimodal_late_fusion_classification_with_missing_generation_over_test\" find \"$LATE_BASE\" -name \"*.csv\")"
+    ]
+  }
+}

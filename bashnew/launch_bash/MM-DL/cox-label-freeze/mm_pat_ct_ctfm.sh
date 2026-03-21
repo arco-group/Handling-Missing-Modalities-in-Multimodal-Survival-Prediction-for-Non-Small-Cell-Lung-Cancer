@@ -2,8 +2,9 @@
 echo pwd # Print the current working directory
 # Define arrays
 tasks=("Cixregression")
-models=("concat_model_FC" ) # "concat_model_FC" 
+models=( "concat_model_ODST") # ", "concat_model_ODST" " 
 targets=("OS_1d_regression") # 
+
 
 # Loop over all combinations
 MAX_JOBS=1

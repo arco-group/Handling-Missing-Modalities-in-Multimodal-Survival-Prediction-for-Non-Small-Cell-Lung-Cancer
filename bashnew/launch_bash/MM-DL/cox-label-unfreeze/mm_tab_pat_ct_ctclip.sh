@@ -3,7 +3,7 @@
 echo pwd # Print the current working directory
 # Define arrays
 tasks=("Cixregression")
-models=("concat_model_FC" ) # "concat_model_FC" 
+models=("concat_model_FC") # "concat_model_FC" 
 targets=("OS_1d_regression") #  "PFS_1d_regression" "LocalProgression_1d_regression" "M+_1d_regression"
 # Loop over all combinations
 MAX_JOBS=1
@@ -12,7 +12,7 @@ for task in "${tasks[@]}"; do
   for model in "${models[@]}"; do
     for target in "${targets[@]}"; do
       experiment="AIDA_multimodal_WSI+CT+tabular_${task}_cox_label"
-      decho "🚀 Running experiment: $experiment"
+      echo "🚀 Running experiment: $experiment"
       python ./main.py experiment="$experiment" \
       experiment/paths/system@_global_=local_ctclip \
       experiment/model@shared_net=${model} \

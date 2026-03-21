@@ -4,24 +4,21 @@
 #bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_pat_ct.sh
 #bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_pat_ct.sh
 
-bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_ct_ctclip.sh
-bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_pat_ct_ctclip.sh
-bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_pat_ct_ctclip.sh
+#bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_ct_ctclip.sh
+#bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_pat_ct_ctclip.sh
+#bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_pat_ct_ctclip.sh
 
 bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_ct_ctfm.sh
 bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_pat_ct_ctfm.sh
 bash bashnew/launch_bash/MM-DL/cox-label-unfreeze/mm_tab_pat_ct_ctfm.sh
 
-bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_ct_ctclip.sh
-bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_pat_ct_ctclip.sh
-bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_pat_ct_ctclip.sh
+#bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_ct_ctclip.sh
+#bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_pat_ct_ctclip.sh
+#bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_pat_ct_ctclip.sh
 
 bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_ct_ctfm.sh
 bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_pat_ct_ctfm.sh
 bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_pat_ct_ctfm.sh
-
-
-
 
 #bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_tab_ct.sh
 #bash bashnew/launch_bash/MM-DL/cox-label-freeze/mm_pat_ct.sh

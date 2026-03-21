@@ -24,3 +24,4 @@ data_cache
 dist/
 build/
 *.egg   
+.claude

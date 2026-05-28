@@ -1,0 +1,9 @@
+[submodule "CT-CLIP"]
+	path = CT-CLIP
+	url = https://github.com/ibrahimethemhamamci/CT-CLIP.git
+[submodule "CT-FM"]
+	path = CT-FM
+	url = https://github.com/project-lighter/CT-FM.git
+[submodule "Merlin"]
+	path = Merlin
+	url = https://github.com/StanfordMIMI/Merlin.git

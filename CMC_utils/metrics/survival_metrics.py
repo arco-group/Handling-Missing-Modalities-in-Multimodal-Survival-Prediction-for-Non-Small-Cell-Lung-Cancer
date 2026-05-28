@@ -236,6 +236,9 @@ def uno_c_index(y_true, y_score, **kwargs):
     """Uno's C-index (Robust to Censoring)"""
     if not SKSURV_AVAILABLE:
         return -1.0
+    valid_mask = ~np.isnan(y_true).any(axis=1) & ~np.isnan(y_score).any(axis=1)
+    y_true = y_true[valid_mask]
+    y_score = y_score[valid_mask]
     y_true_struct = _to_structured_array(y_true)
     risk_score = _prepare_risk_score(y_score)
     y_train = kwargs.get('y_train_struct', y_true_struct)
@@ -247,6 +250,9 @@ def td_auc(y_true, y_score, **kwargs):
     """Time-Dependent AUC (Mean over time)"""
     if not SKSURV_AVAILABLE:
         return -1.0
+    valid_mask = ~np.isnan(y_true).any(axis=1) & ~np.isnan(y_score).any(axis=1)
+    y_true = y_true[valid_mask]
+    y_score = y_score[valid_mask]
     y_true_struct = _to_structured_array(y_true)
     risk_score = _prepare_risk_score(y_score)
     y_train = kwargs.get('y_train_struct', y_true_struct)
@@ -269,6 +275,9 @@ def c_index(y_true, y_score, **kwargs):
     y_true.insert(0, "ID", range(len(y_true)))
     y_pred.insert(0, "ID", range(len(y_pred)))
     y_pred.loc[:, "prediction"] = y_pred["prediction"].explode()
+    valid_mask = y_pred["prediction"].notna() & y_true["efs"].notna() & y_true["efs_time"].notna()
+    y_pred = y_pred[valid_mask].reset_index(drop=True)
+    y_true = y_true[valid_mask].reset_index(drop=True)
     a = score(y_true, y_pred.astype(float), "ID")
     return a
 

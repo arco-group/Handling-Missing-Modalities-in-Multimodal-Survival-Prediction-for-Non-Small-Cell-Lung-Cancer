@@ -1,7 +1,6 @@
 *.DS_Store
 data
 emb_env
-Merlin
 tests
 AIDA_MM
 outputs
@@ -24,9 +23,13 @@ data_cache
 dist/
 build/
 *.egg   
+<<<<<<< HEAD
 .claude
 CT-FM
+=======
+>>>>>>> publication-and-readme-creation-branch
 *.pt
-
-
-
+merlin_env
+CLAUDE.md
+.vscode
+plots/

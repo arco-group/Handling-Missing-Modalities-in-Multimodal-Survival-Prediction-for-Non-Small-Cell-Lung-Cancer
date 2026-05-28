@@ -1,4 +1,7 @@
+source AIDA_MM/bin/activate
+
 #!/bin/bash
+
 bash bashnew/launch_bash/ML/label-cox/ct_ctclip_reg_run.sh
 bash bashnew/launch_bash/ML/label-cox/ct_ctfm_reg_run.sh
 # bash bashnew/launch_bash/ML/label-cox/tabular_reg_run.sh

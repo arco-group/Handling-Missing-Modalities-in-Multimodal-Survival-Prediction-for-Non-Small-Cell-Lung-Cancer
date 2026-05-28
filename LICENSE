@@ -1,16 +1,60 @@
-MIT License
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 
-Copyright (c) 2025 cm.caruso
+Copyright (c) 2025-2026 Filippo Ruffini and the authors of
+"Handling Missing Modalities in Multimodal Survival Prediction for
+Non-Small Cell Lung Cancer" (Research Square rs-8490631; in press at
+npj Digital Medicine).
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This work — including all source code, configuration files, documentation,
+and figures contained in this repository — is licensed under the
+Creative Commons Attribution-NonCommercial 4.0 International License.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+You are free to:
+  - Share — copy and redistribute the material in any medium or format.
+  - Adapt — remix, transform, and build upon the material.
+
+Under the following terms:
+  - Attribution    — You must give appropriate credit, provide a link to
+                     the license, and indicate if changes were made. You
+                     may do so in any reasonable manner, but not in any
+                     way that suggests the licensor endorses you or your
+                     use.
+  - NonCommercial  — You may not use the material for commercial purposes.
+                     Commercial use includes, but is not limited to,
+                     incorporating the code or trained models into a
+                     for-profit product or service, paid consulting based
+                     on this work, or use within a commercial clinical
+                     decision-support system.
+
+No additional restrictions — You may not apply legal terms or technological
+measures that legally restrict others from doing anything the license
+permits.
+
+Notices:
+  - You do not have to comply with the license for elements of the material
+    in the public domain or where your use is permitted by an applicable
+    exception or limitation.
+  - No warranties are given. The license may not give you all of the
+    permissions necessary for your intended use. For example, other rights
+    such as publicity, privacy, or moral rights may limit how you use the
+    material.
+  - The clinical dataset used to train and evaluate the models is NOT
+    covered by this license and is NOT redistributed with this repository.
+    It is governed by its own data-use agreement and remains the property
+    of the originating institutions.
+  - The git submodules under CT-CLIP/, CT-FM/, and Merlin/ are third-party
+    projects governed by their own upstream licenses (see each submodule's
+    LICENSE file). This license applies only to the code and content in
+    this superproject.
+
+The full legal text of the CC BY-NC 4.0 license is available at:
+    https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+A human-readable summary is available at:
+    https://creativecommons.org/licenses/by-nc/4.0/
+
+For commercial licensing inquiries, please contact the corresponding
+authors of the accompanying publication.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

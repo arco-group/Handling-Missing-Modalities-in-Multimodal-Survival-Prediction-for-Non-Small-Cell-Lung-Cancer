@@ -26,6 +26,6 @@ build/
 *.egg   
 CT-FM
 *.pt
-
+merlin_env
 
 

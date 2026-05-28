@@ -1,0 +1,3 @@
+data_path: .
+output_path: ./outputs/fold_specific_label
+

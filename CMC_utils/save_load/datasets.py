@@ -29,14 +29,14 @@ def load_features_dataset(data_paths: [], columns: dict, **kwargs ) -> pd.DataFr
     loaded_array = [ arr if arr is not None else np.full(shape, np.nan) for arr in loaded_array]
 
 
-
-
     features_loaded = np.stack(loaded_array)
+    add_ = kwargs['name_addition'] if 'name_addition' in kwargs else ''
+    name_col = lambda x: f'{add_}:feat_{x}'
     for i in range(features_loaded.shape[1]):
-        columns[f'feat_{i}'] = 'float'
+        columns[name_col(i)] = 'float'
 
-    features_df = pd.DataFrame(features_loaded, columns=[f'feat_{i}' for i in range(features_loaded.shape[1])], index=pd.Series(Ids, name=[column for column in columns.keys() if columns[column] == 'id'][0] if 'id' in columns.values() else 'ID'))
 
+    features_df = pd.DataFrame(features_loaded, columns=[name_col(i) for i in range(features_loaded.shape[1])], index=pd.Series(Ids, name=[column for column in columns.keys() if columns[column] == 'id'][0] if 'id' in columns.values() else 'ID'))
 
     return features_df, columns
 
@@ -95,9 +95,9 @@ def load_tabular_dataset(path: str, columns: dict, task: str, **kwargs ) -> Tupl
     if db_type == "features":
         path_column = [ column_name for column_name, column_type in columns.items() if column_type == "path" ][0]
 
-
+        subname_features = path.split('/')[-2]
         data_paths = data[path_column].copy() if path_column in data.columns else None
-        features_loaded, columns = load_features_dataset(data_paths, columns, data_path=data_paths)
+        features_loaded, columns = load_features_dataset(data_paths, columns, data_path=data_paths, name_addition=subname_features)
         if path_column is not None and path_column in data.columns:
             columns.pop(path_column)
             data.drop(path_column, axis=1, inplace=True)

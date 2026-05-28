@@ -92,6 +92,58 @@
             ]
         },
         {
+            "name": "EARLY FUSION-CT-TAB (CTFM)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
+            "justMyCode": false,
+            "args": [
+                "experiment=early_AIDA_multimodal_CT+tabular_Cixregression_cox_label_",
+                "experiment/paths/system@_global_=local_ctfm",
+                "experiment/databases@dbs.0=CT_ctfm_AIDA_OS_1d_regression",
+                "continue_experiment=true"
+            ]
+        },
+        {
+            "name": "EARLY FUSION-WSI-CT (CTFM)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
+            "justMyCode": false,
+            "args": [
+                "experiment=early_AIDA_multimodal_WSI+CT_Cixregression_cox_label",
+                "experiment/paths/system@_global_=local_ctfm",
+                "experiment/model@model=survival_NN_ODST_NAIM",
+                "experiment/databases@dbs.0=WSI_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.1=CT_ctfm_AIDA_OS_1d_regression",
+                "continue_experiment=true",
+                "model_name=early_fusion_survival_NN_ODST_NAIM"
+            ]
+        },
+        {
+            "name": "EARLY FUSION-WSI-CT-TAB (CTFM)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/AIDA_MM/bin/python",
+            "justMyCode": false,
+            "args": [
+                "experiment=early_AIDA_multimodal_WSI+CT+tabular_Cixregression_cox_label",
+                "experiment/paths/system@_global_=local_ctfm",
+                "experiment/model@model=survival_NN_ODST_NAIM",
+                "experiment/databases@dbs.0=WSI_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.1=CT_ctfm_AIDA_OS_1d_regression",
+                "experiment/databases@dbs.2=AIDA_OS_1d_regression",
+                "continue_experiment=true",
+                "model_name=early_fusion_survival_NN_ODST_NAIM"
+            ]
+        },
+        {
             "name": "CT-CLIP Cix-regression",
             "type": "debugpy",
             "request": "launch",

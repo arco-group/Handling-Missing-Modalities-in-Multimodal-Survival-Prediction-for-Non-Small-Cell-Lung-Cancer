@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 # ---------------------------------------------------------
 # 1. Data Preparation (Unchanged)
@@ -33,101 +34,127 @@ df_clinical['Missing_Pct'] = 100 - df_clinical['Available_Pct']
 df_clinical = df_clinical.sort_values('Available_Pct', ascending=False)
 
 # ---------------------------------------------------------
-# 2. Plot Construction (Split)
+# 2. Plot Construction (Separate figures)
 # ---------------------------------------------------------
 
 # Define Colors & Fonts
-COLOR_AVAIL = '#A2E2AE'
-COLOR_MISS  = '#FFB7B2'
-FONT_COLOR = "#2c3e50"
-FONT_FAMILY = "Computer Modern"
-FONT_SIZE = 24  # Increased from 14
+COLOR_AVAIL = '#B8D8BA'   # pastel sage green
+COLOR_MISS  = '#F4B9B8'   # pastel rose
+FONT_COLOR  = "#2c3e50"
+FONT_FAMILY = "Didot, GFS Didot, Bodoni MT, Palatino, serif"
+FONT_SIZE   = 18
+
+COMMON_LAYOUT = dict(
+    barmode='stack',
+    plot_bgcolor='white',
+    paper_bgcolor='white',
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    legend=dict(
+        orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5,
+        font=dict(size=FONT_SIZE),
+    ),
+    bargap=0.35,
+)
 
 # ==========================================
-# FIGURE 1: Data Availability by Modality
+# FIGURE 1: Data Availability by Modality (vertical bars)
 # ==========================================
 fig1 = go.Figure()
 
-# Available Traces
 fig1.add_trace(go.Bar(
-    x=df_modality['Modality'],
-    y=df_modality['Available_Pct'],
+    y=df_modality['Modality'],
+    x=df_modality['Available_Pct'],
     name='Available',
-    marker=dict(color=COLOR_AVAIL, line=dict(color='grey', width=0.5)),
-    text=[f"{n}<br>({p:.1f}%)" for n, p in zip(df_modality['Available_N'], df_modality['Available_Pct'])],
-    textposition='auto',
-    showlegend=True
+    orientation='h',
+    marker=dict(color=COLOR_AVAIL, line=dict(color='white', width=1.0)),
+    text=[f"{n}  ({p:.1f}%)" for n, p in zip(df_modality['Available_N'], df_modality['Available_Pct'])],
+    textposition='inside',
+    insidetextanchor='middle',
+    showlegend=True,
 ))
 
-# Missing Traces
 fig1.add_trace(go.Bar(
-    x=df_modality['Modality'],
-    y=df_modality['Missing_Pct'],
+    y=df_modality['Modality'],
+    x=df_modality['Missing_Pct'],
     name='Missing',
-    marker=dict(color=COLOR_MISS, line=dict(color='grey', width=0.5)),
-    text=[f"{n}<br>({p:.1f}%)" if p > 5 else "" for n, p in zip(df_modality['Missing_N'], df_modality['Missing_Pct'])],
-    textposition='auto',
-    showlegend=True
+    orientation='h',
+    marker=dict(color=COLOR_MISS, line=dict(color='white', width=1.0)),
+    text=[f"{n}  ({p:.1f}%)" if p > 5 else "" for n, p in zip(df_modality['Missing_N'], df_modality['Missing_Pct'])],
+    textposition='inside',
+    insidetextanchor='middle',
+    showlegend=True,
 ))
 
-# Layout for Figure 1
 fig1.update_layout(
-    #title="<b>a) Data Availability by Modality</b>",
-    barmode='stack',
-    plot_bgcolor='white',
-    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR, weight="bold"),
-    height=500, # Adjusted height for single plot
-    width=800,
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
-    margin=dict(l=80, r=50, t=80, b=50)
+    **COMMON_LAYOUT,
+    height=300,
+    width=700,
+    margin=dict(l=20, r=30, t=70, b=60),
 )
-fig1.update_yaxes(title_text="% Patients", range=[0, 100], showgrid=True, gridcolor='#ececec')
+fig1.update_xaxes(title_text="Missing Modality (%)", range=[0, 100],
+                  showgrid=True, gridcolor='#ececec', zeroline=False)
+fig1.update_yaxes(showgrid=False)
 
 
 # ==========================================
-# FIGURE 2: Missingness in Structured Clinical Variables
+# FIGURE 2: Missingness in Clinical Variables (vertical bars)
 # ==========================================
 fig2 = go.Figure()
 
-# Available Traces
 fig2.add_trace(go.Bar(
     x=df_clinical['Variable'],
     y=df_clinical['Available_Pct'],
     name='Available',
-    marker=dict(color=COLOR_AVAIL, line=dict(color='grey', width=0.5)),
-    text=[f"{p:.1f}%" if p > 10 else "" for p in df_clinical['Available_Pct']],
+    marker=dict(color=COLOR_AVAIL, line=dict(color='white', width=0.8)),
+    text=[f"<b>{p:.1f}%</b>" if p > 8 else "" for p in df_clinical['Available_Pct']],
     textposition='inside',
-    showlegend=True # Enabled legend for standalone figure
+    insidetextanchor='middle',
+    textangle=0,
+    textfont=dict(size=26, color=FONT_COLOR, family=FONT_FAMILY),
+    showlegend=True,
 ))
 
-# Missing Traces
 fig2.add_trace(go.Bar(
     x=df_clinical['Variable'],
     y=df_clinical['Missing_Pct'],
     name='Missing',
-    marker=dict(color=COLOR_MISS, line=dict(color='grey', width=0.5)),
-    text=[f"{p:.1f}%" if p > 10 else "" for p in df_clinical['Missing_Pct']],
+    marker=dict(color=COLOR_MISS, line=dict(color='white', width=0.8)),
+    text=[f"<b>{p:.1f}%</b>" if p > 8 else "" for p in df_clinical['Missing_Pct']],
     textposition='inside',
-    showlegend=True # Enabled legend for standalone figure
+    insidetextanchor='middle',
+    textangle=0,
+    textfont=dict(size=26, color=FONT_COLOR, family=FONT_FAMILY),
+    showlegend=True,
 ))
 
-# Layout for Figure 2
 fig2.update_layout(
-    #title="<b>b) Missingness in Structured Clinical Variables</b>",
-    barmode='stack',
-    plot_bgcolor='white',
-    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR, weight="bold"),
-    height=600, # Adjusted height
-    width=1000,
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
-    margin=dict(l=80, r=50, t=80, b=100)
+    **COMMON_LAYOUT,
+    height=700,
+    width=1400,
+    margin=dict(l=80, r=30, t=100, b=200),
 )
-fig2.update_yaxes(title_text="% Patients", range=[0, 100], showgrid=True, gridcolor='#ececec')
-fig2.update_xaxes(tickangle=-45)
+fig2.update_layout(
+    font=dict(family=FONT_FAMILY, size=28, color=FONT_COLOR),
+    legend=dict(
+        orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5,
+        font=dict(size=30, family=FONT_FAMILY),
+    ),
+)
+fig2.update_xaxes(
+    tickangle=-45,
+    tickfont=dict(size=26, family=FONT_FAMILY, color=FONT_COLOR),
+    showgrid=False,
+)
+fig2.update_yaxes(
+    title_text="% Patients",
+    range=[0, 100],
+    showgrid=True,
+    gridcolor='#ececec',
+    zeroline=False,
+    title_font=dict(size=30, family=FONT_FAMILY, color=FONT_COLOR),
+    tickfont=dict(size=26, family=FONT_FAMILY, color=FONT_COLOR),
+)
 
-# Show or Save
-#fig1.show()
-#fig2.show()
-
+# Save
 fig1.write_image("figure1_modality.png", scale=3)
 fig2.write_image("figure2_clinical.png", scale=3)

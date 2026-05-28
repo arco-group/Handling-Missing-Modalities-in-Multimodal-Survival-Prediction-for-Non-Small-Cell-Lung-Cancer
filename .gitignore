@@ -1,7 +1,6 @@
 *.DS_Store
 data
 emb_env
-Merlin
 tests
 AIDA_MM
 outputs
@@ -24,7 +23,6 @@ data_cache
 dist/
 build/
 *.egg   
-CT-FM
 *.pt
 merlin_env
 CLAUDE.md

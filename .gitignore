@@ -26,5 +26,5 @@ build/
 *.pt
 merlin_env
 CLAUDE.md
-
+.vscode
 plots/

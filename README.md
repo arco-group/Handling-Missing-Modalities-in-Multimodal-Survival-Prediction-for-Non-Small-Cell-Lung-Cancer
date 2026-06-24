@@ -6,7 +6,7 @@
   <a href="figures/figure2.pdf"><img src="figures/figure2.png" alt="Three-step architecture: per-modality embedding → modality-specific transformer encoders → intermediate-fusion survival head" width="820"/></a>
 </p>
 
-[![npj Digital Medicine — In Press](https://img.shields.io/badge/npj%20Digital%20Medicine-In%20Press-006c66?style=for-the-badge&logo=nature&logoColor=white)](https://www.nature.com/articles/s41746-026-02783-3)
+[![npj Digital Medicine — 10.1038/s41746-026-02783-3](https://img.shields.io/badge/npj%20Digital%20Medicine-In%20Press-006c66?style=for-the-badge&logo=nature&logoColor=white)](https://www.nature.com/articles/s41746-026-02783-3)
 [![Research Square](https://img.shields.io/badge/Research%20Square-rs--8490631-1a8fbf?style=for-the-badge&logo=researchgate&logoColor=white)](https://www.researchsquare.com/article/rs-8490631/latest)
 [![Paper](https://img.shields.io/badge/Read%20the-Preprint-1f6feb?style=for-the-badge&logo=readthedocs&logoColor=white)](https://www.researchsquare.com/article/rs-8490631/latest)
 [![Python](https://img.shields.io/badge/Python-3.10.4-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)

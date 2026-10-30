@@ -14,7 +14,6 @@ from Merlin.merlin.data import DataLoader
 from Merlin.merlin import Merlin
 
 
-os.environ["HF_TOKEN"] = "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"
 
 warnings.filterwarnings("ignore")
 device = "cuda" if torch.cuda.is_available() else "cpu"
